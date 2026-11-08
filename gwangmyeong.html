@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>동탄역 → 광명역</title>
+<meta property="og:title" content="동탄역 → 광명역 빠른 길 (대중교통)">
+<meta property="og:description" content="SRT+KTX 약 1시간 · 버스+1호선 약 1시간 40분, 지도 애니메이션">
+<meta property="og:image" content="https://kkhgold.github.io/dongtan-route/og-gm.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1f;--sub:#6b6b70;--line:#e4e2dd;--car:#e8590c;--rail:#1971c2;--bus:#2f9e44;--walk:#868e96}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+header{padding:16px 16px 8px}h1{font-size:20px;margin:0}header p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.tabs{display:flex;gap:8px;padding:4px 16px}.tabs button{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:15px;font-weight:600}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+#mtabs button.on{background:var(--car);border-color:var(--car);color:#fff}
+.cmp{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}.cmp .h{color:var(--sub)}
+#map{height:46vh;position:sticky;top:0;z-index:1;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9)}}
+main{padding:12px 16px 32px;max-width:760px;margin:0 auto}
+.stats{display:flex;gap:8px;margin-bottom:12px}.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:18px}.stat span{color:var(--sub);font-size:12px}
+.step{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer}
+.step .ic{font-size:22px}.step h3{margin:0;font-size:15px}.step p{margin:2px 0 0;color:var(--sub);font-size:13px}.step .t{margin-left:auto;color:var(--sub);font-size:13px;white-space:nowrap}
+.note{background:var(--card);border-left:4px solid var(--car);padding:10px 12px;border-radius:6px;font-size:13px;color:var(--sub);margin-top:12px}
+.btns{display:flex;gap:8px;margin-top:12px}.btns a,.btns button{flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:14px}
+</style></head><body>
+<header><h1>동탄역 → 광명역 (대중교통)</h1><p>경로를 고르면 지도에서 애니메이션으로 재생돼요. 시간·요금은 대략치예요.</p></header>
+<div class="tabs" id="mtabs"><button data-m="ktx" class="on">🥇 SRT+KTX 약 1시간</button><button data-m="sub">🥈 버스+1호선 1시간 40분</button></div>
+<div id="map"></div>
+<main><div class="stats" id="stats"></div><div id="steps"></div><div class="note" id="note"></div>
+<div class="btns"><a id="kmap" target="_blank" rel="noopener" href="https://map.kakao.com/?sName=%EB%8F%99%ED%83%84%EC%97%AD&eName=%EA%B4%91%EB%AA%85%EC%97%AD&target=traffic">카카오맵 실시간 길찾기</a><button id="replay">▶ 다시 재생</button></div></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const BUS=[[37.2004,127.09564],[37.19206,127.09561],[37.18628,127.09558],[37.18094,127.09619],[37.17865,127.09624],[37.1771,127.09616],[37.1765,127.09654],[37.17669,127.09737],[37.17717,127.09744],[37.17746,127.0971],[37.17763,127.09575],[37.17794,127.0916],[37.17832,127.08598],[37.17892,127.07953],[37.18105,127.07254],[37.18333,127.06569],[37.18383,127.06246],[37.18384,127.05989],[37.18316,127.05893],[37.18267,127.05817],[37.18293,127.05721],[37.18435,127.05621],[37.18598,127.05513],[37.1869,127.0545],[37.18774,127.05403],[37.18854,127.05371],[37.18905,127.05331],[37.18933,127.05268],[37.18941,127.05196],[37.18948,127.05114],[37.18958,127.0505],[37.18966,127.0499],[37.18971,127.04705],[37.19014,127.04649],[37.19106,127.04617],[37.1921,127.04522],[37.19376,127.04339],[37.19601,127.04188],[37.19778,127.04104],[37.19983,127.04045],[37.20065,127.04003],[37.20491,127.03718],[37.20652,127.03603],[37.20783,127.03487],[37.20727,127.03333]];
+const DT=[37.2004,127.0956],CA=[36.7946,127.1046],GM=[37.4163,126.8848],BJ=[37.2068,127.0331],GC=[37.4559,126.8943];
+const SRT=[DT,[37.10,127.10],[36.99,127.09],[36.90,127.10],CA];
+const KTX=[CA,[36.90,127.06],[37.02,127.00],[37.15,126.96],[37.28,126.93],[37.36,126.90],GM];
+const L1=[BJ,[37.2250,127.0240],[37.2440,127.0136],[37.2660,127.0000],[37.2842,126.9898],[37.3003,126.9710],[37.3207,126.9481],[37.3432,126.9486],[37.3537,126.9483],[37.3721,126.9433],[37.4016,126.9228],[37.4350,126.9025],GC];
+const ROUTES={
+ ktx:{stats:[["약 1시간","소요(환승 포함)"],["환승 1회","천안아산역"],["약 1.5만 원","SRT+KTX"]],
+  legs:[{mode:"srt",path:SRT},{mode:"walk",path:[CA,[36.7950,127.1040]]},{mode:"ktx",path:KTX}],
+  steps:[["🚄","동탄역 SRT 탑승","부산·목포 방향 (남쪽으로 내려가요)","0분",0],["🔁","천안아산역 하차 → KTX 환승","같은 역에서 갈아타기, 환승 10~20분 표로 예매","15분",0.4],["🚅","KTX 서울·용산 방향 탑승","광명 정차 열차인지 확인","30분",0.45],["📍","광명역 도착","","약 60분",1]],
+  note:"SRT 앱과 코레일톡에서 두 표를 같이 예매하세요. 열차 간격이 길어서 시간이 안 맞으면 대기 때문에 오히려 늦어질 수 있어요."},
+ sub:{stats:[["약 1시간 40분","소요"],["환승 2회","버스→1호선→셔틀/버스"],["약 2~3천 원","교통카드"]],
+  legs:[{mode:"bus",path:BUS},{mode:"rail",path:L1},{mode:"bus",path:[GC,[37.44,126.885],GM]}],
+  steps:[["🚌","동탄역 → 병점역","버스 약 25분","0분",0],["🚇","병점역 1호선 서울 방향","급행이면 약 35분 (수원·안양 경유)","30분",0.2],["🚉","금천구청역 하차","","70분",0.85],["🚌","금천구청 → 광명역","광명셔틀 열차(하루 몇 회) 또는 버스 10~15분","75분",0.88],["📍","광명역 도착","","약 100분",1]],
+  note:"버스 번호와 광명셔틀 시간은 바뀔 수 있으니 카카오맵에서 확인하세요. 싸지만 오래 걸려요."}
+};
+const STY={srt:{c:"#7048e8",d:null,i:"🚄"},ktx:{c:"#1971c2",d:null,i:"🚅"},rail:{c:"#1c3d8c",d:null,i:"🚇"},bus:{c:"#2f9e44",d:null,i:"🚌"},walk:{c:"#868e96",d:"2 8",i:"🚶"}};
+const map=L.map("map",{zoomControl:false}).setView([37.1,127.0],10);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+const icon=t=>L.divIcon({html:`<div style="font-size:22px">${t}</div>`,className:"",iconSize:[24,24],iconAnchor:[12,12]});
+L.marker(DT,{icon:icon("🟢")}).addTo(map).bindTooltip("동탄역");L.marker(GM,{icon:icon("📍")}).addTo(map).bindTooltip("광명역");
+let layer=L.layerGroup().addTo(map),mover=null,raf=0,m="ktx";
+const dist=(a,b)=>Math.hypot(a[0]-b[0],(a[1]-b[1])*0.8);
+function flat(r){const pts=[];r.legs.forEach(l=>l.path.forEach(p=>pts.push({p,m:l.mode})));return pts}
+function at(pts,f){let tot=0;const seg=[];for(let i=1;i<pts.length;i++){const d=dist(pts[i-1].p,pts[i].p);seg.push(d);tot+=d}
+ let t=f*tot;for(let i=0;i<seg.length;i++){if(t<=seg[i]){const k=seg[i]?t/seg[i]:0,a=pts[i].p,b=pts[i+1].p;return{ll:[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k],m:pts[i+1].m}}t-=seg[i]}return{ll:pts[pts.length-1].p,m:pts[pts.length-1].m}}
+function show(){const r=ROUTES[m];document.querySelectorAll("#mtabs button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
+ document.getElementById("stats").innerHTML=r.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
+ document.getElementById("steps").innerHTML=r.steps.map(s=>`<div class="step" data-f="${s[4]}"><div class="ic">${s[0]}</div><div><h3>${s[1]}</h3><p>${s[2]}</p></div><div class="t">${s[3]}</div></div>`).join("");
+ document.getElementById("note").textContent=r.note;
+ layer.clearLayers();r.legs.forEach(l=>{const s=STY[l.mode];L.polyline(l.path,{color:s.c,weight:5,opacity:.25,dashArray:s.d}).addTo(layer)});
+ map.fitBounds(L.latLngBounds(r.legs.flatMap(l=>l.path).concat([DT,GM])),{padding:[30,30]});
+ document.querySelectorAll(".step").forEach(el=>el.onclick=()=>{map.setView(at(flat(r),+el.dataset.f).ll,14);window.scrollTo({top:0,behavior:"smooth"})});
+ play()}
+function play(){cancelAnimationFrame(raf);const pts=flat(ROUTES[m]);if(mover)mover.remove();mover=L.marker(pts[0].p,{icon:icon(STY[pts[0].m].i),zIndexOffset:1000}).addTo(map);
+ const T=6000,t0=performance.now();let lastM=null,done=[],tr=null;
+ (function step(now){const f=Math.min(1,(now-t0)/T),q=at(pts,f);
+  if(q.m!==lastM){lastM=q.m;mover.setIcon(icon(STY[q.m].i));done=done.slice(-1);tr=L.polyline([],{weight:5,color:STY[q.m].c,dashArray:STY[q.m].d}).addTo(layer)}
+  done.push(q.ll);tr.setLatLngs(done);mover.setLatLng(q.ll);if(f<1)raf=requestAnimationFrame(step)})(t0)}
+document.querySelectorAll("#mtabs button").forEach(b=>b.onclick=()=>{m=b.dataset.m;show()});document.getElementById("replay").onclick=show;
+show();
+</script></body></html>
