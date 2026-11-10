@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>11자상가 가는 길</title>
+<meta property="og:title" content="동탄 남광장 → 영천동 11자상가 (자동차)">
+<meta property="og:description" content="자동차 약 15분 · 4.5km · 상가 옆 공영주차장 주차까지 애니메이션">
+<meta property="og:image" content="https://kkhgold.github.io/dongtan-route/og-11ja.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1f;--sub:#6b6b70;--line:#e4e2dd;--car:#e8590c;--rail:#1971c2;--bus:#2f9e44;--walk:#868e96}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+header{padding:16px 16px 8px}h1{font-size:20px;margin:0}header p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.tabs{display:flex;gap:8px;padding:4px 16px}.tabs button{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:15px;font-weight:600}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+#mtabs button.on{background:var(--car);border-color:var(--car);color:#fff}
+.cmp{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}.cmp .h{color:var(--sub)}
+#map{height:46vh;position:sticky;top:0;z-index:1;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9)}}
+main{padding:12px 16px 32px;max-width:760px;margin:0 auto}
+.stats{display:flex;gap:8px;margin-bottom:12px}.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:18px}.stat span{color:var(--sub);font-size:12px}
+.step{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer}
+.step .ic{font-size:22px}.step h3{margin:0;font-size:15px}.step p{margin:2px 0 0;color:var(--sub);font-size:13px}.step .t{margin-left:auto;color:var(--sub);font-size:13px;white-space:nowrap}
+.note{background:var(--card);border-left:4px solid var(--car);padding:10px 12px;border-radius:6px;font-size:13px;color:var(--sub);margin-top:12px}
+.btns{display:flex;gap:8px;margin-top:12px}.btns a,.btns button{flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:14px}
+.lotlbl{font:600 11px sans-serif;color:#1971c2;background:#fff;border:1px solid #1971c2;border-radius:4px;padding:0 3px;white-space:nowrap}
+.toast{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;background:var(--ink);color:var(--bg);padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}.toast.on{opacity:1}
+</style></head><body>
+<header><h1>동탄 남광장 → 영천동 11자상가 🚗</h1><p>동탄1 남광장에서 동탄2 영천동 11자상가(지산1길·지산2길 상가거리)까지 · 주차까지 애니메이션 · 시간은 대략치예요.</p></header>
+<div class="tabs" id="mtabs"><button data-m="car" class="on">🚗 자동차 + 주차</button></div>
+<div style="position:relative"><div id="map"></div><div class="toast" id="toast"></div></div>
+<main><div class="stats" id="stats"></div><div id="steps"></div><div class="note" id="note"></div>
+<div class="btns"><a target="_blank" rel="noopener" href="https://map.kakao.com/?sName=%EB%8F%99%ED%83%84%20%EB%82%A8%EA%B4%91%EC%9E%A5&eName=%EB%8F%99%ED%83%84%20%EC%98%81%EC%B2%9C%EB%8F%99%2011%EC%9E%90%EC%83%81%EA%B0%80">카카오맵 길찾기</a><button id="replay">▶ 다시 재생</button></div></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const D={car:[[37.20067,127.07158],[37.20031,127.07167],[37.20038,127.07217],[37.20044,127.07252],[37.20048,127.0728],[37.20049,127.07287],[37.20055,127.07287],[37.20079,127.07284],[37.2009,127.07282],[37.20114,127.07279],[37.20127,127.07278],[37.20133,127.07277],[37.2014,127.07277],[37.20181,127.07275],[37.20192,127.07275],[37.20192,127.0729],[37.20192,127.07346],[37.20192,127.07365],[37.20192,127.07382],[37.20211,127.07382],[37.20228,127.07382],[37.20244,127.07384],[37.20267,127.07386],[37.20291,127.07389],[37.20311,127.07393],[37.20325,127.07396],[37.20335,127.07398],[37.20348,127.07402],[37.20362,127.07406],[37.20377,127.07411],[37.20392,127.07416],[37.20398,127.07417],[37.20411,127.07422],[37.20423,127.07427],[37.20445,127.07435],[37.20466,127.07445],[37.20481,127.07453],[37.20483,127.07454],[37.20502,127.07465],[37.20532,127.07483],[37.20557,127.07499],[37.20577,127.07513],[37.20595,127.07527],[37.20598,127.07529],[37.20611,127.07539],[37.20616,127.07543],[37.20629,127.07565],[37.20632,127.0757],[37.20633,127.07574],[37.20633,127.07581],[37.20633,127.07588],[37.20629,127.07602],[37.20602,127.07644],[37.20588,127.07666],[37.20576,127.07687],[37.20564,127.0771],[37.20554,127.07731],[37.2055,127.07741],[37.20545,127.07754],[37.20541,127.07767],[37.20537,127.07782],[37.20531,127.07806],[37.20526,127.0783],[37.20483,127.08031],[37.20474,127.0808],[37.2047,127.08108],[37.20469,127.08129],[37.20467,127.08153],[37.20466,127.08181],[37.20466,127.08399],[37.20466,127.08412],[37.20466,127.08422],[37.20466,127.08439],[37.20466,127.08477],[37.20465,127.08556],[37.20465,127.08716],[37.20465,127.08793],[37.20465,127.08802],[37.20465,127.08832],[37.20465,127.0884],[37.20465,127.08913],[37.20465,127.09245],[37.20465,127.09267],[37.20465,127.09291],[37.20465,127.09314],[37.20465,127.09492],[37.20464,127.09592],[37.20464,127.09616],[37.20464,127.0964],[37.20465,127.09842],[37.20465,127.09868],[37.20466,127.09896],[37.20466,127.09921],[37.20464,127.09998],[37.20461,127.10052],[37.2046,127.10063],[37.20457,127.10097],[37.2043,127.10318],[37.20426,127.10344],[37.20423,127.10368],[37.20407,127.10478],[37.20394,127.10553],[37.20364,127.10694],[37.2034,127.10808],[37.20333,127.10862],[37.20328,127.10904],[37.20326,127.1097],[37.20338,127.10971],[37.20352,127.10972],[37.2037,127.10974],[37.20413,127.10979],[37.20463,127.10984],[37.20474,127.10985],[37.20486,127.10987],[37.20495,127.1099],[37.20501,127.10992],[37.20509,127.10997],[37.20517,127.11003],[37.20525,127.1101],[37.20532,127.11018],[37.20537,127.11026],[37.20543,127.11034],[37.2055,127.11049],[37.20566,127.11085],[37.20582,127.11119],[37.20589,127.11137],[37.20597,127.11154],[37.20605,127.11173],[37.20615,127.11195],[37.20624,127.11216],[37.20647,127.11197],[37.20677,127.11175],[37.20702,127.11223],[37.20708,127.11221]]};
+const START=D.car[0];
+const R=D.car[D.car.length-1];
+// 11자상가 동쪽 유료 공영주차장 (OSM way 616176570 실제 영역)
+const POLY=[[37.2073383,127.1122241],[37.2073811,127.1123448],[37.2072369,127.1123381],[37.2070916,127.1123676],[37.2067872,127.112558],[37.2067284,127.1124762],[37.2070232,127.1122549],[37.2071642,127.1122134]];
+const DEST=[37.20695,127.11125]; // 11자상가 중심 (스타벅스 동탄영천점·농협 영천지점 부근)
+const AISLE=[37.20722,127.11228], SPOT=[37.20712,127.11234];
+const PARK=[R,[37.20700,127.11226],AISLE];
+const REV=[AISLE,[37.20716,127.11233],SPOT];
+const WALKP=[SPOT,[37.20711,127.11218],[37.20702,127.11170],DEST];
+const STY={car:{c:"#e8590c",d:null,i:"🚗"},park:{c:"#1971c2",d:null,i:"🚗"},rev:{c:"#1971c2",d:"3 5",i:"🔙"},walk:{c:"#868e96",d:"2 8",i:"🚶"}};
+const ROUTES={
+ car:{stats:[["약 15분","주차·도보 포함"],["4.5km","운전 10~12분"],["공영주차장","상가 바로 옆 (유료)"]],
+  legs:[{m:"car",p:D.car,t:6500,z:null,msg:"🚗 남광장 출발! 노작로 → 동탄원천로"},
+        {m:"park",p:PARK,t:2000,z:19,msg:"🅿️ 11자상가 옆 공영주차장 진입"},
+        {m:"rev",p:REV,t:1700,z:19,msg:"🔙 후진 주차 중…"},
+        {m:"walk",p:WALKP,t:2600,z:18,msg:"✅ 주차 완료! 상가거리로 걸어가요"}],
+  steps:[["📍","동탄 남광장 출발","동탄중심상가1길 → 메타폴리스로","0분"],["🛣️","노작로 → 동탄원천로","경부고속도로 밑을 지나 동탄2로, 약 2.1km","3분"],["🛣️","동탄치동천로 → 동탄순환대로25길","치동천 따라 약 2km, 영천동으로 진입","8분"],["🅿️","11자상가 동쪽 공영주차장","유료 · 저녁·주말엔 상가 건물 지하주차장도 이용","12분"],["🔙","후진 주차","","13분"],["🚶","11자상가까지 도보","주차장 서쪽 상가거리, 1~2분","15분"]],
+  note:"경로는 OpenStreetMap 기준이에요. 출퇴근·주말 저녁엔 동탄원천로가 막혀 20분 이상 걸릴 수 있어요. 공영주차장은 OSM에 유료로 표시된 노상 주차장이고, 자리가 없으면 상가 건물 지하주차장(대부분 유료, 가게 영수증 할인)을 쓰세요. 11자상가는 '지산1길·지산2길' 일대 상가거리를 가리키는 별칭이라 정확한 가게 위치는 카카오맵으로 확인하세요."}
+};
+const map=L.map("map",{zoomControl:false}).setView([37.204,127.092],14);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:20,maxNativeZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+const icon=(t,s=24)=>L.divIcon({html:`<div style="font-size:${s}px;line-height:1">${t}</div>`,className:"",iconSize:[s,s],iconAnchor:[s/2,s/2]});
+// 주차장 그리기
+const lot=L.layerGroup().addTo(map);
+L.polygon(POLY,{color:"#1971c2",weight:2,fillColor:"#1971c2",fillOpacity:.1}).addTo(lot);
+L.marker([37.20748,127.11250],{icon:L.divIcon({html:'<span class="lotlbl">🅿️ 공영주차장</span>',className:"",iconSize:[80,16],iconAnchor:[40,8]})}).addTo(lot);
+L.marker(START,{icon:icon("📍")}).addTo(map).bindTooltip("동탄 남광장");
+L.marker(DEST,{icon:icon("🛍️")}).addTo(map).bindTooltip("🛍️ 11자상가",{permanent:true,direction:"right"});
+let layer=L.layerGroup().addTo(map),mover=null,raf=0,m="car",run=0;
+const dist=(a,b)=>Math.hypot(a[0]-b[0],(a[1]-b[1])*0.8);
+function at(p,f){let tot=0;const s=[];for(let i=1;i<p.length;i++){const d=dist(p[i-1],p[i]);s.push(d);tot+=d}let t=f*tot;for(let i=0;i<s.length;i++){if(t<=s[i]){const k=s[i]?t/s[i]:0;return[p[i][0]+(p[i+1][0]-p[i][0])*k,p[i][1]+(p[i+1][1]-p[i][1])*k]}t-=s[i]}return p[p.length-1]}
+const toast=document.getElementById("toast");let tt=0;function say(s){toast.textContent=s;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("on"),2200)}
+function show(){const r=ROUTES[m];document.querySelectorAll("#mtabs button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
+ document.getElementById("stats").innerHTML=r.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
+ document.getElementById("steps").innerHTML=r.steps.map((s,k)=>`<div class="step" data-k="${k}"><div class="ic">${s[0]}</div><div><h3>${s[1]}</h3>${s[2]?`<p>${s[2]}</p>`:""}</div><div class="t">${s[3]}</div></div>`).join("");
+ document.getElementById("note").textContent=r.note;
+ layer.clearLayers();r.legs.forEach(l=>L.polyline(l.p,{color:STY[l.m].c,weight:5,opacity:.22,dashArray:STY[l.m].d}).addTo(layer));
+ play()}
+function play(){cancelAnimationFrame(raf);const my=++run,r=ROUTES[m];if(mover)mover.remove();
+ map.fitBounds(L.latLngBounds(D.car.concat([DEST])),{padding:[30,30]});
+ mover=L.marker(r.legs[0].p[0],{icon:icon(STY[r.legs[0].m].i,28),zIndexOffset:1000}).addTo(map);
+ let li=0;
+ function leg(){if(my!==run)return;const l=r.legs[li];say(l.msg);mover.setIcon(icon(STY[l.m].i,28));
+  if(l.z)map.flyTo(at(l.p,.5),l.z,{duration:.8});else map.flyToBounds(L.latLngBounds(l.p),{padding:[40,40],duration:.6});
+  const tr=L.polyline([],{color:STY[l.m].c,weight:5,dashArray:STY[l.m].d}).addTo(layer),pts=[];
+  setTimeout(()=>{const t0=performance.now();(function step(now){if(my!==run)return;const f=Math.min(1,(now-t0)/l.t),q=at(l.p,f);pts.push(q);tr.setLatLngs(pts);mover.setLatLng(q);
+   if(f<1)raf=requestAnimationFrame(step);else{li++;if(li<r.legs.length)setTimeout(leg,350);else{say("🎉 11자상가 도착!");mover.setIcon(icon("🙋",28))}}})(t0)},l.z?850:650)}
+ leg()}
+document.querySelectorAll("#mtabs button").forEach(b=>b.onclick=()=>{m=b.dataset.m;show()});document.getElementById("replay").onclick=show;
+show();
+</script></body></html>
