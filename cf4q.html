@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CF기술그룹 4Q 행사</title>
+<meta property="og:title" content="CF기술그룹 26년 4Q 조직력 강화행사">
+<meta property="og:description" content="기흥캠퍼스 → 나담나무공방 → 창심관 이동 동선 (자동차·버스 애니메이션)">
+<meta property="og:image" content="https://kkhgold.github.io/dongtan-route/og-cf4q.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1f;--sub:#6b6b70;--line:#e4e2dd;--car:#e8590c;--rail:#1971c2;--bus:#2f9e44;--walk:#868e96}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1e1e21;--ink:#f1f1f3;--sub:#a0a0a8;--line:#2e2e33}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+header{padding:16px 16px 8px}h1{font-size:20px;margin:0}header p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.tabs{display:flex;gap:8px;padding:4px 16px}.tabs button{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:15px;font-weight:600}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+#mtabs button.on{background:var(--car);border-color:var(--car);color:#fff}
+.cmp{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}.cmp .h{color:var(--sub)}
+#map{height:46vh;position:sticky;top:0;z-index:1;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9)}}
+main{padding:12px 16px 32px;max-width:760px;margin:0 auto}
+.stats{display:flex;gap:8px;margin-bottom:12px}.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:18px}.stat span{color:var(--sub);font-size:12px}
+.step{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer}
+.step .ic{font-size:22px}.step h3{margin:0;font-size:15px}.step p{margin:2px 0 0;color:var(--sub);font-size:13px}.step .t{margin-left:auto;color:var(--sub);font-size:13px;white-space:nowrap}
+.note{background:var(--card);border-left:4px solid var(--car);padding:10px 12px;border-radius:6px;font-size:13px;color:var(--sub);margin-top:12px}
+.btns{display:flex;gap:8px;margin-top:12px}.btns a,.btns button{flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:14px}
+.lotlbl{font:600 11px sans-serif;color:#1971c2;background:#fff;border:1px solid #1971c2;border-radius:4px;padding:0 3px;white-space:nowrap}
+.ev{background:linear-gradient(135deg,#1c3d6e,#2f6fb3);color:#fff;padding:18px 16px 14px}.ev .k{font-size:12px;letter-spacing:.1em;opacity:.8}.ev h1{font-size:21px;margin:2px 0 6px}.flow{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}.flow span{background:rgba(255,255,255,.16);border-radius:14px;padding:3px 10px}
+.toast{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;background:var(--ink);color:var(--bg);padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}.toast.on{opacity:1}
+</style></head><body>
+<header class="ev"><div class="k">TEAM BUILDING · 2026 Q4</div><h1>🌳 CF기술그룹 26년 4Q 조직력 강화행사</h1><div class="flow"><span>🏢 기흥캠퍼스</span><span>→</span><span>🪵 나담나무공방</span><span>→</span><span>🍽️ 창심관</span></div></header><p style="margin:8px 16px 0;color:var(--sub);font-size:13px">버튼을 고르면 이동·주차·도보 동선이 애니메이션으로 재생돼요. 시간은 대략치예요.</p>
+<div class="tabs" id="mtabs"><button data-m="car" class="on">🚗 자동차 + 주차</button><button data-m="bus">🚌 버스</button></div>
+<div style="position:relative"><div id="map"></div><div class="toast" id="toast"></div></div>
+<main><div class="stats" id="stats"></div><div id="steps"></div><div class="note" id="note"></div>
+<div class="btns"><a target="_blank" rel="noopener" href="https://map.kakao.com/?sName=%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90%20%EA%B8%B0%ED%9D%A5%EC%BA%A0%ED%8D%BC%EC%8A%A4&eName=%EB%8F%99%ED%83%84%EB%B0%98%EC%84%9D%EB%A1%9C%20196">카카오맵 길찾기</a><button id="replay">▶ 다시 재생</button></div></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const D={"car":[[37.22343,127.08001],[37.22342,127.07996],[37.22347,127.07988],[37.22352,127.07971],[37.22352,127.07955],[37.22347,127.07914],[37.22347,127.07892],[37.22351,127.0787],[37.22346,127.07858],[37.22343,127.07855],[37.22333,127.07848],[37.22315,127.07824],[37.22307,127.07805],[37.22281,127.07769],[37.22223,127.0771],[37.22211,127.07693],[37.22193,127.0767],[37.22176,127.07638],[37.2216,127.07583],[37.22158,127.07575],[37.22157,127.07564],[37.22157,127.07559],[37.22156,127.0755],[37.22138,127.07561],[37.22084,127.07595],[37.22072,127.07604],[37.2204,127.07619],[37.21962,127.07654],[37.21925,127.07672],[37.21865,127.07701],[37.2184,127.07714],[37.21824,127.07722],[37.21796,127.07736],[37.21763,127.07756],[37.21753,127.07761],[37.21712,127.07777],[37.21704,127.07781],[37.21694,127.07784],[37.21677,127.07789],[37.21648,127.07797],[37.21625,127.07805],[37.21501,127.07842],[37.21492,127.0785],[37.21482,127.07852],[37.21452,127.07861],[37.21442,127.07864],[37.21428,127.07868],[37.2141,127.07873],[37.21394,127.07878],[37.21376,127.07885],[37.21365,127.07889],[37.21158,127.07973],[37.21148,127.07977],[37.21147,127.07978],[37.21131,127.07984],[37.21117,127.0799],[37.20967,127.08052],[37.20958,127.08052],[37.20947,127.0805],[37.20942,127.08049],[37.20936,127.08046],[37.20932,127.08043],[37.20927,127.08039],[37.20922,127.08032],[37.20907,127.08006],[37.20903,127.0799],[37.2089,127.07947],[37.20873,127.07901],[37.20859,127.07868],[37.20846,127.07838],[37.20841,127.07828],[37.20838,127.07822],[37.20832,127.0781],[37.20826,127.07798],[37.20818,127.07782],[37.20807,127.07763],[37.20791,127.07735],[37.20775,127.0771],[37.2077,127.07702],[37.20762,127.0769],[37.20746,127.07669],[37.20742,127.07663],[37.20722,127.07638],[37.20703,127.07615],[37.20699,127.0761],[37.20695,127.07606],[37.2069,127.07601],[37.20674,127.07585],[37.20664,127.07574],[37.20653,127.07563],[37.20647,127.07557],[37.20622,127.07534],[37.20617,127.07528],[37.20611,127.07523],[37.20587,127.07504],[37.20566,127.07488],[37.20542,127.07473],[37.20526,127.07463],[37.20508,127.07452],[37.20485,127.0744],[37.2047,127.07431],[37.20449,127.07421],[37.20455,127.074],[37.20475,127.07338],[37.20488,127.07344],[37.20496,127.07348],[37.20533,127.07366],[37.20531,127.07372],[37.20519,127.074],[37.20548,127.07421]],"walk1":[[37.22343,127.08001],[37.22342,127.07996],[37.22347,127.07988],[37.22352,127.07971],[37.22352,127.07955],[37.22347,127.07914],[37.22347,127.07892],[37.22351,127.0787],[37.22346,127.07858],[37.22343,127.07855],[37.22333,127.07848],[37.22315,127.07824],[37.22307,127.07805],[37.22281,127.07769],[37.22223,127.0771],[37.22211,127.07693],[37.22193,127.0767],[37.22176,127.07638],[37.2216,127.07583],[37.22158,127.07575],[37.22157,127.07564],[37.22157,127.07559],[37.22156,127.0755],[37.22138,127.07561]],"bus":[[37.22138,127.07561],[37.22084,127.07595],[37.22072,127.07604],[37.2204,127.07619],[37.21962,127.07654],[37.21925,127.07672],[37.21865,127.07701],[37.2184,127.07714],[37.21824,127.07722],[37.21796,127.07736],[37.21763,127.07756],[37.21753,127.07761],[37.21712,127.07777],[37.21704,127.07781],[37.21694,127.07784],[37.21677,127.07789],[37.21648,127.07797],[37.21625,127.07805],[37.21501,127.07842],[37.21492,127.0785],[37.21482,127.07852],[37.21452,127.07861],[37.21442,127.07864],[37.21428,127.07868],[37.2141,127.07873],[37.21394,127.07878],[37.21376,127.07885],[37.21365,127.07889],[37.21158,127.07973],[37.21148,127.07977],[37.21147,127.07978],[37.21127,127.07968],[37.21116,127.07923],[37.21104,127.07879],[37.21101,127.07869],[37.21095,127.07851],[37.21086,127.07825],[37.21066,127.07767],[37.21048,127.07726],[37.21043,127.07715],[37.21009,127.07646],[37.20982,127.07597],[37.20961,127.07563],[37.20941,127.07531],[37.20904,127.07479],[37.20896,127.07469],[37.20891,127.07461],[37.20881,127.07448],[37.20857,127.0742],[37.20836,127.07395],[37.20814,127.07373],[37.208,127.07359]],"walk2":[[37.208,127.07359],[37.20789,127.07347],[37.20775,127.07334],[37.20739,127.07299],[37.20729,127.07291],[37.20697,127.07268],[37.20668,127.07247]]};
+const START=D.car[0];
+const R=D.car[D.car.length-1];
+// 북광장 공영주차장 (화성도시공사 운영 노상주차장, OSM 실제 영역)
+const POLY=[[37.206099,127.074251],[37.206112,127.074315],[37.206015,127.074511],[37.205279,127.074028],[37.205368,127.073773],[37.205741,127.073995]];
+const M0=[37.205324,127.073900],V=[0.000736,0.000510],U=[-0.0000445,0.0001275]; // 축(남→북), 폭 방향(서→동, 절반)
+const P=(t,s)=>[M0[0]+V[0]*t+U[0]*s,M0[1]+V[1]*t+U[1]*s];
+const DEST=P(0.62,-3.2);            // 창심관 (공영주차장 바로 앞)
+const SHOP=[37.20612,127.07245];  // 나담나무공방 · 동탄반석로 196 (동탄중심상가2길 모퉁이)
+const AISLE=P(0.80,0), SPOT=P(0.70,-0.7);
+const PARK=[R,P(0.30,1.05),P(0.30,0),AISLE];             // 입구 → 통로 따라 지나치기
+const REV=[AISLE,P(0.74,-0.25),SPOT];                      // 후진 주차
+const WALKP=[SPOT,P(0.70,-1.15),[37.20585,127.07370],[37.20605,127.07285],SHOP];
+const WALK2=[SHOP,[37.20605,127.07285],[37.20585,127.07370],DEST];
+const STY={car:{c:"#e8590c",d:null,i:"🚗"},park:{c:"#1971c2",d:null,i:"🚗"},rev:{c:"#1971c2",d:"3 5",i:"🔙"},bus:{c:"#2f9e44",d:null,i:"🚌"},walk:{c:"#868e96",d:"2 8",i:"🚶"}};
+const ROUTES={
+ car:{stats:[["약 15분","공방 도착까지"],["2.9km","운전 약 8분"],["주차 1번","창심관 앞 공영주차장"]],
+  legs:[{m:"car",p:D.car,t:5000,z:null,msg:"🚗 기흥캠퍼스 출발! 삼성1로 → 노작로"},
+        {m:"park",p:PARK,t:2200,z:19,msg:"🅿️ 창심관 앞 공영주차장 진입"},
+        {m:"rev",p:REV,t:1800,z:19,msg:"🔙 후진 주차 — 차는 여기 두고 걸어요"},
+        {m:"walk",p:WALKP,t:2800,z:18,msg:"🚶 나담나무공방으로 (도보 2~3분)",arrive:"🪵 나담나무공방 도착! 목공 체험"},
+        {m:"walk",p:WALK2,t:2800,z:18,msg:"🚶 공방 → 창심관 (도보 2~3분)"}],
+  steps:[["🏢","기흥캠퍼스 출발","캠퍼스 내 도로 → 삼성1로","0분"],["🛣️","삼성1로 → 노작로 → 동탄지성로","약 2.5km","3분"],["🅿️","북광장 공영주차장 주차","창심관 바로 앞 · 유료 · 저녁엔 만차 잦음 → 카풀 추천","10분"],["🪵","나담나무공방 (동탄반석로 196)","동탄중심상가2길 따라 서쪽, 행정복지센터 맞은편 모퉁이","15분"],["🍽️","창심관으로 이동","공방에서 왔던 길 그대로 동쪽 2~3분 · 주차장 바로 앞","행사 후"]],
+  note:"차는 공영주차장에 한 번만 세우고 공방 ↔ 창심관은 걸어서 이동하는 동선이에요. 공방 위치는 도로명 주소 번호(188·204 사이)로, 창심관은 '공영주차장 바로 앞'으로 표시한 거라 실제 입구는 카카오맵으로 확인하세요. 회식 후엔 대리운전·택시를 이용하세요."},
+ bus:{stats:[["약 25분","공방 도착까지"],["버스 1번","환승 없음"],["1,500원대","교통카드"]],
+  legs:[{m:"walk",p:D.walk1,t:2200,z:16,msg:"🚶 캠퍼스 정류장까지"},
+        {m:"bus",p:D.bus,t:4500,z:null,msg:"🚌 버스 탑승 → 북광장 방면"},
+        {m:"walk",p:D.walk2.concat([SHOP]),t:1800,z:18,msg:"🚶 하차 후 나담나무공방으로",arrive:"🪵 나담나무공방 도착! 목공 체험"},
+        {m:"walk",p:WALK2,t:2800,z:18,msg:"🚶 공방 → 창심관 (도보 2~3분)"}],
+  steps:[["🚶","캠퍼스 → 삼성1로 버스정류장","도보 약 7분","0분"],["🚌","동탄 방면 버스","대기 5~10분, 승차 약 8분","10분"],["🚏","북광장(동탄반석로) 하차","행정복지센터 근처","22분"],["🪵","나담나무공방","정류장에서 남쪽 1분","25분"],["🍽️","창심관으로 이동","동탄중심상가2길 따라 동쪽 2~3분","행사 후"]],
+  note:"버스 번호와 배차는 카카오맵에서 확인하세요. 정류장 위치는 대략이에요."}
+};
+const map=L.map("map",{zoomControl:false}).setView([37.215,127.077],15);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:20,maxNativeZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+const icon=(t,s=24)=>L.divIcon({html:`<div style="font-size:${s}px;line-height:1">${t}</div>`,className:"",iconSize:[s,s],iconAnchor:[s/2,s/2]});
+// 주차장 그리기
+const lot=L.layerGroup().addTo(map);
+L.polygon(POLY,{color:"#1971c2",weight:2,fillColor:"#1971c2",fillOpacity:.1}).addTo(lot);
+for(let k=0;k<10;k++){const t=0.08+k*0.09;L.polyline([P(t,-0.35),P(t,-0.95)],{color:"#1971c2",weight:1}).addTo(lot);L.polyline([P(t,0.35),P(t,0.95)],{color:"#1971c2",weight:1}).addTo(lot)}
+L.marker(P(1.08,0.3),{icon:L.divIcon({html:'<span class="lotlbl">🅿️ 공영주차장</span>',className:"",iconSize:[80,16],iconAnchor:[40,8]})}).addTo(lot);
+L.marker(START,{icon:icon("🏢")}).addTo(map).bindTooltip("삼성전자 기흥캠퍼스");
+L.marker(DEST,{icon:icon("🍽️")}).addTo(map).bindTooltip("② 창심관",{permanent:true,direction:"right"});
+L.marker(SHOP,{icon:icon("🪵")}).addTo(map).bindTooltip("① 나담나무공방",{permanent:true,direction:"left"});
+let layer=L.layerGroup().addTo(map),mover=null,raf=0,m="car",run=0;
+const dist=(a,b)=>Math.hypot(a[0]-b[0],(a[1]-b[1])*0.8);
+function at(p,f){let tot=0;const s=[];for(let i=1;i<p.length;i++){const d=dist(p[i-1],p[i]);s.push(d);tot+=d}let t=f*tot;for(let i=0;i<s.length;i++){if(t<=s[i]){const k=s[i]?t/s[i]:0;return[p[i][0]+(p[i+1][0]-p[i][0])*k,p[i][1]+(p[i+1][1]-p[i][1])*k]}t-=s[i]}return p[p.length-1]}
+const toast=document.getElementById("toast");let tt=0;function say(s){toast.textContent=s;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("on"),2200)}
+function show(){const r=ROUTES[m];document.querySelectorAll("#mtabs button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
+ document.getElementById("stats").innerHTML=r.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
+ document.getElementById("steps").innerHTML=r.steps.map((s,k)=>`<div class="step" data-k="${k}"><div class="ic">${s[0]}</div><div><h3>${s[1]}</h3>${s[2]?`<p>${s[2]}</p>`:""}</div><div class="t">${s[3]}</div></div>`).join("");
+ document.getElementById("note").textContent=r.note;
+ layer.clearLayers();r.legs.forEach(l=>L.polyline(l.p,{color:STY[l.m].c,weight:5,opacity:.22,dashArray:STY[l.m].d}).addTo(layer));
+ play()}
+function play(){cancelAnimationFrame(raf);const my=++run,r=ROUTES[m];if(mover)mover.remove();
+ map.fitBounds(L.latLngBounds(D.car.concat([DEST])),{padding:[30,30]});
+ mover=L.marker(r.legs[0].p[0],{icon:icon(STY[r.legs[0].m].i,28),zIndexOffset:1000}).addTo(map);
+ let li=0;
+ function leg(){if(my!==run)return;const l=r.legs[li];say(l.msg);mover.setIcon(icon(STY[l.m].i,28));
+  if(l.z)map.flyTo(at(l.p,.5),l.z,{duration:.8});else map.flyToBounds(L.latLngBounds(l.p),{padding:[40,40],duration:.6});
+  const tr=L.polyline([],{color:STY[l.m].c,weight:5,dashArray:STY[l.m].d}).addTo(layer),pts=[];
+  setTimeout(()=>{const t0=performance.now();(function step(now){if(my!==run)return;const f=Math.min(1,(now-t0)/l.t),q=at(l.p,f);pts.push(q);tr.setLatLngs(pts);mover.setLatLng(q);
+   if(f<1)raf=requestAnimationFrame(step);else{if(l.arrive)say(l.arrive);li++;if(li<r.legs.length)setTimeout(leg,l.arrive?1600:350);else{say("🎉 창심관 도착! 4Q 행사 화이팅 🙌");mover.setIcon(icon("🙋",28))}}})(t0)},l.z?850:650)}
+ leg()}
+document.querySelectorAll("#mtabs button").forEach(b=>b.onclick=()=>{m=b.dataset.m;show()});document.getElementById("replay").onclick=show;
+show();
+</script></body></html>
