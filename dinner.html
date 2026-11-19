@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>동탄역 회식 맛집</title>
+<meta name="description" content="동탄역 3인 회식 맛집 (고기 · 막창 · 회) — 기흥·화성사업장 출발 구글맵 동선">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kkhgold.github.io/dongtan-route/dinner.html">
+<meta property="og:title" content="🍻 동탄역 3인 회식 맛집 · 고기 / 막창 / 회">
+<meta property="og:description" content="구글 평점순 추천 + 기흥·화성사업장에서 가는 길">
+<meta property="og:image" content="https://kkhgold.github.io/dongtan-route/og-dinner.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<style>
+:root{--bg:#f5f4f1;--card:#fff;--ink:#1f1c19;--sub:#6b645c;--line:#e3ded6;--cc:#c2410c;--meat:#c2410c;--gop:#9a3412;--sea:#0e7490;--gh:#1d4ed8;--hs:#7c3aed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151311;--card:#211e1a;--ink:#f2eee9;--sub:#a99f94;--line:#38322b}}
+:root[data-theme="dark"]{--bg:#151311;--card:#211e1a;--ink:#f2eee9;--sub:#a99f94;--line:#38322b}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:15px/1.55 "Noto Sans KR",system-ui,-apple-system,sans-serif}
+.hero{padding:16px 16px 12px;background:linear-gradient(135deg,#3b1d0e,#9a3412 60%,#d9822b);color:#fff}
+.hero .k{font-size:12px;opacity:.85}.hero h1{margin:3px 0 4px;font-size:21px}.hero p{margin:0;font-size:13px;opacity:.92}
+#top{position:sticky;top:0;z-index:5;background:var(--bg)}
+.row{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;border-bottom:1px solid var(--line);background:var(--card)}
+.row button,.row a{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;font:700 13px inherit;cursor:pointer;text-decoration:none}
+.row button.on{background:var(--cc);border-color:var(--cc);color:#fff}
+.row .lab{font-size:12px;color:var(--sub);align-self:center;flex:0 0 auto}
+.row.o button.on{background:var(--oc);border-color:var(--oc)}
+#map{height:36vh;min-height:230px;border-bottom:1px solid var(--line)}
+#toast{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(20,16,12,.85);color:#fff;padding:5px 12px;border-radius:16px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:3}
+main{max-width:760px;margin:0 auto;padding:12px 16px 30px}
+.src{font-size:12px;color:var(--sub);margin:0 0 8px}
+.r{display:flex;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;scroll-margin-top:calc(36vh + 120px)}
+.r.on{border-color:var(--cc);box-shadow:0 0 0 2px color-mix(in srgb,var(--cc) 30%,transparent)}
+.r .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--cc);color:#fff;font:800 13px/26px system-ui;text-align:center}
+.r h3{margin:0;font-size:15px}.r .m{font-size:13px;color:var(--sub)}.r .st{color:#d97706;font-weight:800}
+.r .go{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.r .go a{font-size:12px;font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:14px;padding:3px 9px;color:var(--ink)}
+.r .go a.p{background:var(--oc);border-color:var(--oc);color:#fff}
+.r .t{font-size:12px;margin-top:4px;color:var(--ink)}
+.pick{display:inline-block;font-size:11px;background:#16a34a;color:#fff;border-radius:6px;padding:0 6px;margin-left:5px;vertical-align:1px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}.card h3{margin:0 0 6px;font-size:15px}.card ul{margin:0;padding-left:18px}.card li{font-size:14px;margin:3px 0}
+.note{font-size:12px;color:var(--sub)}
+.load{padding:14px;text-align:center;color:var(--sub);font-size:13px}
+</style></head><body>
+<header class="hero"><div class="k">3인 회식 · 동탄역 도보권 · 퇴근 후</div>
+<h1>🍻 동탄역 회식 맛집 · 고기 / 막창 / 회</h1>
+<p>구글맵 평점과 리뷰 수로 골랐어요. 기흥·화성사업장에서 가는 길도 같이 볼 수 있어요.</p></header>
+<div id="top">
+<div class="row" id="cat"></div>
+<div class="row o" id="org"><span class="lab">출발</span></div>
+<div style="position:relative"><div id="map"></div><div id="toast"></div></div>
+<div class="row"><button id="play">▶ 가는 길 재생</button><a id="gdir" target="_blank" rel="noopener">🧭 구글맵 길찾기</a><a id="gtr" target="_blank" rel="noopener">🚌 대중교통</a></div>
+</div>
+<main>
+<p class="src" id="src"></p>
+<div id="list"><div class="load">구글맵에서 맛집을 불러오는 중…</div></div>
+<div class="card"><h3>🍶 회식 팁</h3><ul>
+<li><b>3명</b>이면 대부분 예약 없이도 되지만, 금요일 저녁 7시는 웨이팅이 있어요. 6시 전 도착이나 전화 예약 추천</li>
+<li>퇴근길 <b>삼성1로·동탄대로</b>는 18–19시에 막혀요. 기흥에서 20–25분, 화성에서 15–20분 잡으세요</li>
+<li>술 마시면 차는 회사에 두고 <b>택시</b>로 가거나, 회식 후 대리운전을 부르세요</li>
+<li>동탄역 주변은 공영주차장이 붐벼요. 롯데백화점 동탄점 주차장(구매 시 할인)을 쓰면 편해요</li></ul></div>
+<p class="note" style="text-align:center">평점·리뷰 수는 페이지를 열 때 구글맵에서 실시간으로 불러와요. 영업시간은 가게 정보에서 확인하세요.<br>지도 Google Maps · 경로 OpenStreetMap/OSRM · <a href="./">동탄 가는 길 모음</a></p>
+</main>
+<script>
+// ---------- 구글 지도 어댑터: 기존 Leaflet 코드(L.*)를 Google Maps JS로 그대로 돌린다 ----------
+function __gl(){
+const g=google.maps, DARK=[{elementType:"geometry",stylers:[{color:"#1f2630"}]},{elementType:"labels.text.fill",stylers:[{color:"#9aa7b4"}]},{elementType:"labels.text.stroke",stylers:[{color:"#1f2630"}]},{featureType:"road",elementType:"geometry",stylers:[{color:"#323c48"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#14202c"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#26303b"}]}];
+const ll=p=>Array.isArray(p)?{lat:p[0],lng:p[1]}:p;
+const isDark=()=>{const t=document.documentElement.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;};
+let info=null;
+const tip=document.createElement("div");tip.style.cssText="position:fixed;z-index:9999;pointer-events:none;background:#fff;color:#17202b;font:12px/1.4 system-ui,sans-serif;padding:4px 8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:none;max-width:240px";
+document.body.appendChild(tip);
+const hideTip=()=>tip.style.display="none";
+function hoverTip(el,get){el.addEventListener("mouseenter",e=>{tip.innerHTML=get();tip.style.display="block";});
+  el.addEventListener("mousemove",e=>{tip.style.left=(e.clientX+12)+"px";tip.style.top=(e.clientY+12)+"px";});el.addEventListener("mouseleave",hideTip);}
+class Bounds{constructor(s,n){this.s=s;this.n=n;}
+  static of(pts){let s=[90,180],n=[-90,-180];pts.forEach(p=>{s=[Math.min(s[0],p[0]),Math.min(s[1],p[1])];n=[Math.max(n[0],p[0]),Math.max(n[1],p[1])];});return new Bounds(s,n);}
+  pad(r){const dy=(this.n[0]-this.s[0])*r,dx=(this.n[1]-this.s[1])*r;return new Bounds([this.s[0]-dy,this.s[1]-dx],[this.n[0]+dy,this.n[1]+dx]);}
+  contains(p){return p[0]>=this.s[0]&&p[0]<=this.n[0]&&p[1]>=this.s[1]&&p[1]<=this.n[1];}
+  g(){return new g.LatLngBounds(ll(this.s),ll(this.n));}}
+class Layer{constructor(){this.items=new Set();this.m=null;}
+  addTo(m){if(this.m===m)return this;this.m=m;this.items.forEach(i=>i._show(m));return this;}
+  add(i){this.items.add(i);if(this.m)i._show(this.m);}
+  remove(){this.items.forEach(i=>i._hide());this.m=null;return this;}
+  clearLayers(){this.items.forEach(i=>i._hide());this.items.clear();}}
+class Base{addTo(t){if(t instanceof Layer){this.grp=t;t.add(this);}else this._show(t);return this;}
+  remove(){if(this.grp){this.grp.items.delete(this);this.grp=null;}this._hide();return this;}}
+// HTML 마커 (divIcon / circleMarker)
+function mkHtml(B){return class Html extends g.OverlayView{
+  constructor(p,o){super();this.p=p;this.icon=o.icon;this.z=o.zIndexOffset||0;this.el=document.createElement("div");
+    this.el.style.cssText="position:absolute;cursor:pointer";this.el.addEventListener("click",e=>{e.stopPropagation();hideTip();if(this.pop)this.openPopup();});this._draw();}
+  _draw(){const i=this.icon;this.el.innerHTML=i.html;this.ax=i.iconAnchor[0];this.ay=i.iconAnchor[1];this.el.style.zIndex=this.z;if(this.lab)this.el.appendChild(this.lab);}
+  onAdd(){this.getPanes().overlayMouseTarget.appendChild(this.el);}
+  draw(){const pr=this.getProjection();if(!pr)return;const pt=pr.fromLatLngToDivPixel(new g.LatLng(this.p[0],this.p[1]));
+    this.el.style.left=(pt.x-this.ax)+"px";this.el.style.top=(pt.y-this.ay)+"px";}
+  onRemove(){this.el.remove();}
+  _show(m){this.setMap(m.g);} _hide(){this.setMap(null);}
+  addTo(t){return B.prototype.addTo.call(this,t);} remove(){return B.prototype.remove.call(this);}
+  setIcon(i){this.icon=i;this._draw();this.draw();return this;}
+  setLatLng(p){this.p=p;this.draw();return this;}
+  bindPopup(h){this.pop=h;return this;}
+  bindTooltip(h,o={}){if(o.permanent){const s=document.createElement("div");s.innerHTML=h;
+      s.style.cssText="position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;background:#fff;color:#17202b;font:600 12px/1.3 system-ui,sans-serif;padding:3px 7px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)";
+      if(o.direction==="left")s.style.right="calc(100% + 6px)";else s.style.left="calc(100% + 6px)";this.lab=s;this.el.appendChild(s);}
+    else hoverTip(this.el,()=>h);return this;}
+  openPopup(){if(!this.getMap())return this;info=info||new g.InfoWindow();info.setContent(typeof this.pop==="function"?this.pop():this.pop);
+    info.setOptions({pixelOffset:new g.Size(0,-this.ay)});info.setPosition(ll(this.p));info.open({map:this.getMap()});return this;}};}
+class Line extends Base{constructor(pts,o){super();const dash=o.dashArray?String(o.dashArray).split(/[ ,]+/).map(Number):null,w=o.weight||3,op=o.opacity??1;
+    this.l=new g.Polyline({path:pts.map(ll),strokeColor:o.color,strokeWeight:w,clickable:false,
+      strokeOpacity:dash?0:op,icons:dash?[{icon:{path:"M 0,-1 0,1",strokeOpacity:op,strokeColor:o.color,strokeWeight:w,scale:Math.max(1,dash[0]*.6)},offset:"0",repeat:((dash[0]+dash[1])*1.4)+"px"}]:[]});}
+  _show(m){this.l.setMap(m.g);} _hide(){this.l.setMap(null);}
+  setLatLngs(p){this.l.setPath(p.map(ll));return this;} bindTooltip(){return this;} bindPopup(){return this;}}
+class Circle extends Base{constructor(c,o){super();this.c=new g.Circle({center:ll(c),radius:o.radius,strokeColor:o.color,strokeWeight:o.weight||2,strokeOpacity:.8,fillColor:o.fillColor||o.color,fillOpacity:o.fillOpacity??.2,clickable:false});}
+  _show(m){this.c.setMap(m.g);} _hide(){this.c.setMap(null);} bindTooltip(){return this;} bindPopup(){return this;}}
+const Html=mkHtml(Base);
+const dot=o=>{const r=o.radius||5,w=o.weight||2,s=2*(r+w);return {html:`<div style="width:${2*r}px;height:${2*r}px;border-radius:50%;background:${o.fillColor||o.color};border:${w}px solid ${o.color||"#fff"};box-shadow:0 1px 3px rgba(0,0,0,.35)"></div>`,iconAnchor:[s/2,s/2]};};
+const pad=o=>{const p=o&&o.padding;return p?{top:p[1],bottom:p[1],left:p[0],right:p[0]}:0;};
+class Map{constructor(id){this.g=new g.Map(document.getElementById(id),{center:{lat:0,lng:0},zoom:3,gestureHandling:"greedy",
+      mapTypeControl:false,streetViewControl:false,fullscreenControl:false,clickableIcons:false,styles:isDark()?DARK:null});
+    this.g.addListener("click",()=>{if(info)info.close();});}
+  setView(p,z){this.g.setCenter(ll(p));this.g.setZoom(z);return this;}
+  getZoom(){return this.g.getZoom();}
+  getBounds(){const b=this.g.getBounds();if(!b)return new Bounds([-90,-180],[90,180]);const s=b.getSouthWest(),n=b.getNorthEast();return new Bounds([s.lat(),s.lng()],[n.lat(),n.lng()]);}
+  fitBounds(b,o){this.g.fitBounds(b.g(),pad(o));return this;}
+  flyToBounds(b,o={}){this.g.fitBounds(b.g(),pad(o));if(o.maxZoom)g.event.addListenerOnce(this.g,"idle",()=>{if(this.g.getZoom()>o.maxZoom)this.g.setZoom(o.maxZoom);});return this;}
+  flyTo(p,z){this.g.panTo(ll(p));if(z)this.g.setZoom(z);return this;}
+  panTo(p){this.g.panTo(ll(p));return this;}
+  distance(a,b){const R=6371e3,r=Math.PI/180,x=(b[0]-a[0])*r,y=(b[1]-a[1])*r,h=Math.sin(x/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+  invalidateSize(){g.event.trigger(this.g,"resize");return this;}}
+window.L={map:id=>new Map(id),tileLayer:()=>({addTo(){return this;}}),layerGroup:()=>new Layer(),
+  divIcon:o=>o,marker:(p,o)=>new Html(p,o||{}),circleMarker:(p,o)=>new Html(p,{icon:dot(o||{}),zIndexOffset:200}),
+  polyline:(p,o)=>new Line(p,o||{}),circle:(c,o)=>new Circle(c,o||{}),latLngBounds:pts=>Bounds.of(pts)};
+window.__app();
+}
+
+</script>
+<script>
+window.__app=async function(){
+const ST=[37.20036,127.09558];
+const ORG={gh:{n:"기흥사업장",p:[37.228932,127.080826],c:"--gh",i:"🏢"},hs:{n:"화성사업장",p:[37.21853,127.06596],c:"--hs",i:"🏭"}};
+const CAT=[{k:"meat",n:"🥩 고기",q:["동탄역 고기집","동탄역 삼겹살","동탄역 소고기 한우","동탄역 갈비"],c:"--meat",re:/고기|육|갈비|삼겹|돈|한우|흑돼지|소|구이|갈매기|목살|정육|우정가|명가|숯불|화로|BBQ|바베큐/i,ty:["barbecue_restaurant","korean_barbecue_restaurant","steak_house"],ex:/뷔페|찜|편백|칼국수|치킨/,maxD:1600,tip:"삼겹살·소고기 구이",
+  picks:["우정가"],fb:[["우정가 동탄역본점","룸이 있어 회식하기 좋은 고깃집 · 동탄대로 489 우성KTX타워 2층"],["육미명가","제주 흑돼지 숯불구이 · 넓고 주차 편함"],["태백집","구워주는 삼겹살 · 동탄순환대로 696"]]},
+ {k:"gop",n:"🐷 막창",q:["동탄역 막창","동탄역 곱창","동탄 막창","동탄 곱창 대창","동탄 소막창"],c:"--gop",re:/곱|막창|대창|양구이/,ty:[],ex:/곱도리|닭/,maxD:3000,tip:"막창·곱창·대창",
+  picks:["부자곱"],fb:[["부자곱","곱창전골·대창·막창 · 동탄역로 102 (웨이팅 있음)"]]},
+ {k:"sea",n:"🐟 회",q:["동탄역 횟집","동탄역 숙성회","동탄역 회","동탄역 해산물"],c:"--sea",re:/회|횟|수산|세꼬시|숙성|어부|물회|오마카세|스시|초밥|사시미/,ty:["seafood_restaurant","sushi_restaurant"],ex:/칼국수|회관|조개구이|치킨/,maxD:1600,tip:"숙성회·해산물",
+  picks:["어부장"],fb:[["어부장 동탄역점","자연산 숙성회 · 모듬 한판 32,000원부터"],["하로센 동탄역점","일식 이자카야 · 회 메뉴"],["동탄해포","해산물 요리 · 푸짐한 양"]]}];
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const icon=(t,s=24)=>L.divIcon({html:`<div style="font-size:${s}px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">${t}</div>`,iconSize:[s,s],iconAnchor:[s/2,s/2]});
+const num=(n,c,on)=>L.divIcon({html:`<div style="width:${on?30:24}px;height:${on?30:24}px;border-radius:50%;background:${on?c:"#fff"};color:${on?"#fff":c};border:2px solid ${c};font:800 12px/${on?26:20}px system-ui;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.35)">${n}</div>`,iconSize:[on?30:24,on?30:24],iconAnchor:[on?15:12,on?15:12]});
+const map=L.map("map").setView(ST,14),layer=L.layerGroup().addTo(map),route=L.layerGroup().addTo(map);
+const toast=document.getElementById("toast");function say(t){toast.innerHTML=t;toast.style.opacity=1;clearTimeout(say.t);say.t=setTimeout(()=>toast.style.opacity=0,2400)}
+let cat=0,org="gh",sel=0,data={},pins=[],R0={"gh": [[37.22893, 127.0808], [37.22879, 127.08081], [37.22862, 127.08099], [37.22843, 127.08133], [37.22816, 127.08171], [37.22805, 127.08181], [37.22789, 127.08186], [37.22776, 127.08195], [37.22759, 127.08208], [37.22754, 127.08211], [37.22737, 127.08221], [37.22702, 127.08238], [37.22655, 127.08271], [37.2264, 127.08271], [37.22606, 127.08272], [37.22527, 127.08267], [37.22485, 127.08261], [37.22431, 127.08258], [37.22397, 127.08255], [37.22366, 127.08254], [37.22344, 127.08253], [37.22327, 127.08253], [37.2232, 127.08254], [37.22297, 127.08257], [37.22275, 127.08262], [37.22255, 127.08267], [37.22242, 127.08273], [37.22234, 127.08276], [37.22219, 127.08284], [37.22185, 127.08302], [37.22157, 127.0832], [37.22114, 127.08349], [37.22057, 127.0839], [37.21994, 127.08435], [37.21937, 127.08476], [37.21904, 127.085], [37.2188, 127.0852], [37.21849, 127.0855], [37.21829, 127.08574], [37.21813, 127.08595], [37.21787, 127.08635], [37.2177, 127.08663], [37.21737, 127.08726], [37.21713, 127.0881], [37.2171, 127.08828], [37.21704, 127.08858], [37.21698, 127.08901], [37.2169, 127.08962], [37.21683, 127.09019], [37.21675, 127.09098], [37.21669, 127.09172], [37.21666, 127.09196], [37.21655, 127.09348], [37.21649, 127.09408], [37.21644, 127.09458], [37.21632, 127.09516], [37.21627, 127.0954], [37.21621, 127.09559], [37.21612, 127.0958], [37.21607, 127.09589], [37.21602, 127.09596], [37.21586, 127.09613], [37.21575, 127.09622], [37.21569, 127.09625], [37.21556, 127.0963], [37.21543, 127.09633], [37.21478, 127.09634], [37.21351, 127.09593], [37.21242, 127.09566], [37.21162, 127.09553], [37.21012, 127.09541], [37.20903, 127.0954], [37.2071, 127.09539], [37.20602, 127.09543], [37.20535, 127.09543], [37.20491, 127.09542], [37.19707, 127.09543], [37.19564, 127.09539], [37.19493, 127.09536], [37.19401, 127.09535], [37.19198, 127.09541], [37.19135, 127.09539], [37.1899, 127.09537], [37.18767, 127.09535], [37.18681, 127.09534], [37.18612, 127.09533], [37.18507, 127.09542], [37.18417, 127.09551], [37.1835, 127.09559], [37.18301, 127.09565], [37.18182, 127.09583], [37.18129, 127.09591], [37.18092, 127.09596], [37.18061, 127.09598], [37.18013, 127.096], [37.1791, 127.096], [37.17813, 127.09596], [37.17784, 127.09594], [37.17651, 127.09573], [37.17579, 127.09555], [37.17507, 127.09532], [37.17466, 127.0952], [37.1742, 127.09502], [37.17391, 127.0949], [37.17352, 127.09472], [37.17292, 127.09445], [37.17166, 127.09388], [37.16803, 127.09219], [37.16768, 127.09204], [37.16745, 127.09193], [37.16632, 127.0914], [37.16621, 127.09136], [37.16201, 127.08942], [37.16124, 127.08907], [37.1608, 127.08886], [37.16045, 127.08871], [37.1589, 127.08799], [37.15862, 127.08786], [37.1574, 127.08726], [37.15503, 127.08615], [37.15216, 127.08483], [37.15073, 127.0842], [37.15011, 127.08394], [37.1493, 127.08371], [37.14858, 127.08357], [37.14824, 127.08351], [37.14724, 127.0834], [37.14657, 127.08339], [37.14628, 127.08341], [37.14595, 127.08342], [37.14559, 127.08337], [37.14497, 127.08341], [37.14487, 127.0834], [37.14467, 127.0834], [37.14446, 127.08338], [37.1443, 127.08335], [37.14416, 127.08328], [37.14387, 127.08309], [37.14366, 127.08285], [37.14348, 127.08249], [37.14336, 127.08206], [37.14326, 127.08141], [37.1432, 127.08073], [37.14316, 127.07953], [37.14312, 127.07887], [37.14309, 127.07838], [37.14308, 127.07813], [37.14297, 127.07814], [37.14298, 127.07838], [37.14297, 127.07863], [37.14301, 127.07944], [37.14295, 127.0798], [37.14291, 127.0801], [37.14297, 127.08076], [37.143, 127.08106], [37.14305, 127.08156], [37.14319, 127.08211], [37.1433, 127.08281], [37.14346, 127.08469], [37.14347, 127.0851], [37.14343, 127.08535], [37.14336, 127.08558], [37.14323, 127.08577], [37.14304, 127.08591], [37.14292, 127.08594], [37.14282, 127.08595], [37.1427, 127.08593], [37.14261, 127.0859], [37.14251, 127.08582], [37.14243, 127.08572], [37.14239, 127.08562], [37.14234, 127.08545], [37.14234, 127.08531], [37.14239, 127.08505], [37.14254, 127.08483], [37.14267, 127.08471], [37.14325, 127.08438], [37.1438, 127.08419], [37.14432, 127.08403], [37.14453, 127.08397], [37.14487, 127.08387], [37.14597, 127.08366], [37.14726, 127.08365], [37.14784, 127.0837], [37.14823, 127.08375], [37.14858, 127.08381], [37.14923, 127.08395], [37.15007, 127.08419], [37.15085, 127.08448], [37.15208, 127.08505], [37.15398, 127.08592], [37.15495, 127.08636], [37.15702, 127.08732], [37.15862, 127.08805], [37.1589, 127.08816], [37.16036, 127.08881], [37.16042, 127.08884], [37.16076, 127.08901], [37.16251, 127.08985], [37.16352, 127.09032], [37.16622, 127.09158], [37.16633, 127.09163], [37.16742, 127.09209], [37.16766, 127.09221], [37.16924, 127.09297], [37.1725, 127.09452], [37.17383, 127.09509], [37.17454, 127.09536], [37.17512, 127.09556], [37.1758, 127.09575], [37.17643, 127.0959], [37.17715, 127.09607], [37.17775, 127.09616], [37.17809, 127.0962], [37.17865, 127.09624], [37.1792, 127.09625], [37.17961, 127.09625], [37.17996, 127.09624], [37.18055, 127.09622], [37.18094, 127.09619], [37.18137, 127.09615], [37.1818, 127.0961], [37.18353, 127.09585], [37.1842, 127.09577], [37.18628, 127.09558], [37.18726, 127.09557], [37.18953, 127.09559], [37.19056, 127.0956], [37.19138, 127.0956], [37.19206, 127.09561], [37.19401, 127.0956], [37.19703, 127.09564], [37.20036, 127.09564]], "hs": [[37.21883, 127.06961], [37.21883, 127.06961], [37.2187, 127.06965], [37.21856, 127.06978], [37.21848, 127.06994], [37.21848, 127.07036], [37.21868, 127.07179], [37.21892, 127.07245], [37.2195, 127.07407], [37.21991, 127.07518], [37.22038, 127.07612], [37.2204, 127.07619], [37.21962, 127.07654], [37.21925, 127.07672], [37.21865, 127.07701], [37.2184, 127.07714], [37.21824, 127.07722], [37.21796, 127.07736], [37.21763, 127.07756], [37.21753, 127.07761], [37.21712, 127.07777], [37.21704, 127.07781], [37.21694, 127.07784], [37.21677, 127.07789], [37.21648, 127.07797], [37.21625, 127.07805], [37.21501, 127.07842], [37.21492, 127.0785], [37.21482, 127.07852], [37.21472, 127.07835], [37.21457, 127.07812], [37.21454, 127.07807], [37.21442, 127.07788], [37.21398, 127.07717], [37.21351, 127.07624], [37.21314, 127.07555], [37.21283, 127.07483], [37.21271, 127.07457], [37.21264, 127.0744], [37.21243, 127.07398], [37.21225, 127.07367], [37.2119, 127.07313], [37.21161, 127.07268], [37.21146, 127.07246], [37.21131, 127.07226], [37.21118, 127.07207], [37.21091, 127.07171], [37.2107, 127.07146], [37.21048, 127.07122], [37.21023, 127.07097], [37.20997, 127.07071], [37.2099, 127.07063], [37.20973, 127.07045], [37.20967, 127.07038], [37.20955, 127.07026], [37.20951, 127.07021], [37.20946, 127.07017], [37.20931, 127.07003], [37.20903, 127.06978], [37.20854, 127.06942], [37.20815, 127.06916], [37.20796, 127.06904], [37.20762, 127.06882], [37.20727, 127.06861], [37.20677, 127.06834], [37.20642, 127.06816], [37.20627, 127.06809], [37.20612, 127.06802], [37.20586, 127.06791], [37.2055, 127.06778], [37.20517, 127.06767], [37.20484, 127.06758], [37.20459, 127.06751], [37.20434, 127.06745], [37.20405, 127.0674], [37.20403, 127.06739], [37.20374, 127.06733], [37.20348, 127.06729], [37.20317, 127.06725], [37.20287, 127.06722], [37.20229, 127.0672], [37.20209, 127.06719], [37.20207, 127.06719], [37.20195, 127.06718], [37.20177, 127.06718], [37.20164, 127.06719], [37.20116, 127.06721], [37.20075, 127.06725], [37.20019, 127.06734], [37.19993, 127.06738], [37.19975, 127.06743], [37.19954, 127.06749], [37.19926, 127.06757], [37.19879, 127.06775], [37.1986, 127.06783], [37.19839, 127.06802], [37.19839, 127.06771], [37.19839, 127.06768], [37.19819, 127.06683], [37.19797, 127.06585], [37.19785, 127.0656], [37.19765, 127.06563], [37.19662, 127.06609], [37.19594, 127.06641], [37.19502, 127.06672], [37.19354, 127.06715], [37.19335, 127.06721], [37.19314, 127.06728], [37.19299, 127.06733], [37.19278, 127.06743], [37.19252, 127.06756], [37.19237, 127.06764], [37.19229, 127.06769], [37.19138, 127.0683], [37.19103, 127.06856], [37.19093, 127.06863], [37.19089, 127.06852], [37.19078, 127.06819], [37.19046, 127.06709], [37.19041, 127.06694], [37.18984, 127.06488], [37.18968, 127.06425], [37.18961, 127.06388], [37.18959, 127.06377], [37.18952, 127.06323], [37.18949, 127.06305], [37.18947, 127.06285], [37.18944, 127.06246], [37.18942, 127.06204], [37.18942, 127.0618], [37.18941, 127.06117], [37.18941, 127.05938], [37.18942, 127.05914], [37.18943, 127.05894], [37.18944, 127.05867], [37.18948, 127.05773], [37.18951, 127.05762], [37.18953, 127.05753], [37.18954, 127.05744], [37.18954, 127.05736], [37.18955, 127.05721], [37.18956, 127.0567], [37.18955, 127.0566], [37.18957, 127.05649], [37.18958, 127.05641], [37.1896, 127.05634], [37.18963, 127.05627], [37.18966, 127.05622], [37.18971, 127.05618], [37.18978, 127.05615], [37.18985, 127.05614], [37.18991, 127.05612], [37.18999, 127.05607], [37.19007, 127.056], [37.19016, 127.05589], [37.19022, 127.05577], [37.19027, 127.05564], [37.19029, 127.05549], [37.1903, 127.05536], [37.19029, 127.05521], [37.19027, 127.05506], [37.19024, 127.05493], [37.1902, 127.05479], [37.19014, 127.05465], [37.19007, 127.05453], [37.19002, 127.05445], [37.18996, 127.05437], [37.18988, 127.05428], [37.18981, 127.05421], [37.18975, 127.05415], [37.18968, 127.0541], [37.18959, 127.05404], [37.18949, 127.05399], [37.18941, 127.05395], [37.18931, 127.05391], [37.18921, 127.05388], [37.18909, 127.05385], [37.18896, 127.05383], [37.18881, 127.05383], [37.18866, 127.05382], [37.18851, 127.05382], [37.18836, 127.05384], [37.18824, 127.05387], [37.18796, 127.05394], [37.18774, 127.05403], [37.18753, 127.05413], [37.18735, 127.05421], [37.18718, 127.05431], [37.18704, 127.05441], [37.1869, 127.0545], [37.18662, 127.0547], [37.18654, 127.05475], [37.18645, 127.0548], [37.18606, 127.05508], [37.18598, 127.05513], [37.18554, 127.05542], [37.18535, 127.05554], [37.18532, 127.05559], [37.18478, 127.05594], [37.18435, 127.05621], [37.18398, 127.05644], [37.18377, 127.05658], [37.18347, 127.05677], [37.18319, 127.05697], [37.18293, 127.05721], [37.18277, 127.05748], [37.1827, 127.05766], [37.18266, 127.05786], [37.18265, 127.05802], [37.18267, 127.05817], [37.18271, 127.05831], [37.18278, 127.05847], [37.18285, 127.05859], [37.18295, 127.05871], [37.18316, 127.05893], [37.18336, 127.05911], [37.18346, 127.05922], [37.18361, 127.05939], [37.18373, 127.05959], [37.18384, 127.05989], [37.18389, 127.06016], [37.18391, 127.0603], [37.18393, 127.06056], [37.1839, 127.06134], [37.18383, 127.06246], [37.18376, 127.06309], [37.18371, 127.06351], [37.18361, 127.06442], [37.18349, 127.06502], [37.18333, 127.06569], [37.18277, 127.06759], [37.18254, 127.06837], [37.18206, 127.0697], [37.18179, 127.07043], [37.18105, 127.07254], [37.18052, 127.07399], [37.18005, 127.07531], [37.17951, 127.07698], [37.17913, 127.07849], [37.17892, 127.07953], [37.17875, 127.08046], [37.17859, 127.08161], [37.1785, 127.08263], [37.17843, 127.08366], [37.17832, 127.08598], [37.17824, 127.08767], [37.17821, 127.08814], [37.17806, 127.08916], [37.17804, 127.08934], [37.17794, 127.0916], [37.17792, 127.09238], [37.17789, 127.09279], [37.17772, 127.09448], [37.17766, 127.09527], [37.17763, 127.09575], [37.17761, 127.09643], [37.17756, 127.09677], [37.17752, 127.09694], [37.17748, 127.09706], [37.17746, 127.0971], [37.17745, 127.09713], [37.17739, 127.09723], [37.17732, 127.09733], [37.17726, 127.09739], [37.17717, 127.09744], [37.17708, 127.09746], [37.17698, 127.09747], [37.17689, 127.09746], [37.1768, 127.09743], [37.17669, 127.09737], [37.17657, 127.09724], [37.17648, 127.09708], [37.17645, 127.09688], [37.17647, 127.0967], [37.1765, 127.09654], [37.17658, 127.09639], [37.17669, 127.09628], [37.17681, 127.09621], [37.17694, 127.09618], [37.1771, 127.09616], [37.17721, 127.09616], [37.17735, 127.09616], [37.17775, 127.09616], [37.17809, 127.0962], [37.17865, 127.09624], [37.1792, 127.09625], [37.17961, 127.09625], [37.17996, 127.09624], [37.18055, 127.09622], [37.18094, 127.09619], [37.18137, 127.09615], [37.1818, 127.0961], [37.18353, 127.09585], [37.1842, 127.09577], [37.18628, 127.09558], [37.18726, 127.09557], [37.18953, 127.09559], [37.19056, 127.0956], [37.19138, 127.0956], [37.19206, 127.09561], [37.19401, 127.0956], [37.19703, 127.09564], [37.20036, 127.09564]]},cur=null,raf=0,playing=false;
+Object.values(ORG).forEach(o=>L.marker(o.p,{icon:icon(o.i,24),zIndexOffset:500}).bindTooltip(o.n).addTo(map));
+L.marker(ST,{icon:icon("🚄",22),zIndexOffset:400}).bindTooltip("동탄역").addTo(map);
+document.getElementById("cat").innerHTML=CAT.map((c,i)=>`<button data-i="${i}">${c.n}</button>`).join("");
+document.getElementById("org").insertAdjacentHTML("beforeend",Object.entries(ORG).map(([k,o])=>`<button data-o="${k}">${o.i} ${o.n}</button>`).join(""));
+document.querySelectorAll("#cat button").forEach(b=>b.onclick=()=>{cat=+b.dataset.i;sel=0;render()});
+document.querySelectorAll("#org button").forEach(b=>b.onclick=()=>{org=b.dataset.o;render(true)});
+// ---- 구글 장소 검색 ----
+const dist=(a,b)=>map.distance(a,b);
+let PlaceCls=null;
+async function search(c){if(data[c.k])return data[c.k];
+ try{if(!PlaceCls)PlaceCls=(await google.maps.importLibrary("places")).Place;
+  const seen={},out=[];
+  for(const q of c.q){const {places}=await PlaceCls.searchByText({textQuery:q,fields:["id","displayName","location","rating","userRatingCount","formattedAddress","googleMapsURI","primaryTypeDisplayName","businessStatus","types"],
+     locationBias:{center:{lat:ST[0],lng:ST[1]},radius:1500},maxResultCount:15,language:"ko",region:"kr"});
+   (places||[]).forEach(p=>{if(seen[p.id])return;seen[p.id]=1;const ll=[p.location.lat(),p.location.lng()];
+    if(p.businessStatus&&p.businessStatus!=="OPERATIONAL")return;if(dist(ll,ST)>c.maxD)return;const nm=p.displayName||"";if(c.ex.test(nm))return;if(!(c.re.test(nm)||(p.types||[]).some(x=>c.ty.includes(x))))return;if(!p.rating||(p.userRatingCount||0)<15)return;
+    out.push({id:p.id,n:p.displayName,ll,r:p.rating,cnt:p.userRatingCount,a:(p.formattedAddress||"").replace(/^대한민국 /,"").replace(/^경기도 /,""),u:p.googleMapsURI,ty:p.primaryTypeDisplayName||""})})}
+  out.forEach(x=>x.s=x.r*Math.log10(x.cnt+10)+(c.picks.some(k=>x.n.includes(k))?1.2:0));
+  out.sort((a,b)=>b.s-a.s);data[c.k]={live:true,list:out.slice(0,6)};
+ }catch(e){console.warn("places",e);data[c.k]={live:false,list:c.fb.map(f=>({n:f[0],a:f[1],ll:null,u:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(f[0]+" 동탄")}))}}
+ return data[c.k]}
+const gdir=(o,x,m)=>`https://www.google.com/maps/dir/?api=1&origin=${o.join(",")}&destination=${encodeURIComponent(x.n+(x.id?"":" 동탄"))}${x.id?"&destination_place_id="+x.id:""}&travelmode=${m}`;
+async function render(onlyOrg){stopAnim();const c=CAT[cat],o=ORG[org];
+ document.documentElement.style.setProperty("--cc",css(c.c));document.documentElement.style.setProperty("--oc",css(o.c));
+ document.querySelectorAll("#cat button").forEach((b,i)=>b.classList.toggle("on",i===cat));
+ document.querySelectorAll("#org button").forEach(b=>b.classList.toggle("on",b.dataset.o===org));
+ if(!onlyOrg)document.getElementById("list").innerHTML=`<div class="load">구글맵에서 ${c.tip} 맛집을 불러오는 중…</div>`;
+ const d=await search(c);const L0=d.list;
+ document.getElementById("src").innerHTML=d.live?`구글맵 기준 동탄역 ${(c.maxD/1000).toFixed(1)}km 안, 리뷰 15개 이상 · <b>평점 × 리뷰 수</b> 순`:`⚠️ 구글 장소 정보를 못 불러와서 웹 검색으로 찾은 후보를 보여 줘요`;
+ layer.clearLayers();pins=L0.map((x,i)=>x.ll?L.marker(x.ll,{icon:num(i+1,css(c.c),i===sel),zIndexOffset:300}).bindPopup(`<b>${x.n}</b>${x.r?`<br>★${x.r} (${x.cnt})`:""}<br><a target="_blank" rel="noopener" href="${x.u}">구글맵에서 보기</a>`).addTo(layer):null);
+ pins.forEach((p,i)=>p&&(p.el.onclick=()=>pick(i)));
+ document.getElementById("list").innerHTML=L0.map((x,i)=>{const pk=c.picks.some(k=>x.n.includes(k));
+  const km=x.ll?dist(o.p,x.ll)/1000*1.35:null;
+  return `<div class="r" id="r${i}" data-i="${i}"><div class="n">${i+1}</div><div style="flex:1;min-width:0"><h3>${x.n}${pk?'<span class="pick">웹 후기 추천</span>':""}</h3>
+  <div class="m">${x.r?`<span class="st">★ ${x.r.toFixed(1)}</span> 리뷰 ${x.cnt.toLocaleString()}개 · `:""}${x.ty?x.ty+" · ":""}${x.a}</div>
+  ${km?`<div class="t">${o.i} ${o.n}에서 차로 약 ${Math.round(km)}km · 퇴근길 ${Math.round(km*2.2+6)}–${Math.round(km*2.8+10)}분 · 동탄역에서 도보 ${Math.max(1,Math.round(dist(ST,x.ll)*1.3/75))}분</div>`:""}
+  <div class="go"><a class="p" target="_blank" rel="noopener" href="${gdir(o.p,x,"driving")}">🚗 ${o.n}에서 길찾기</a><a target="_blank" rel="noopener" href="${x.u}">구글맵 정보·리뷰</a></div></div></div>`}).join("")||`<div class="load">결과가 없어요</div>`;
+ document.querySelectorAll(".r").forEach(el=>el.onclick=e=>{if(e.target.closest("a"))return;pick(+el.dataset.i,true)});
+ if(sel>=L0.length)sel=0;pick(sel,false,true)}
+async function pick(i,scroll,first){stopAnim();sel=i;const c=CAT[cat],o=ORG[org],x=data[c.k].list[i];if(!x)return;
+ document.querySelectorAll(".r").forEach((e,j)=>e.classList.toggle("on",j===i));
+ pins.forEach((p,j)=>p&&p.setIcon(num(j+1,css(c.c),j===i)));
+ document.getElementById("gdir").href=gdir(o.p,x,"driving");document.getElementById("gtr").href=gdir(o.p,x,"transit");
+ route.clearLayers();cur=null;
+ if(x.ll){cur=await getRoute(o.p,x.ll);L.polyline(cur,{color:css(o.c),weight:4,opacity:.55}).addTo(route);
+  map.fitBounds(L.latLngBounds(cur.concat([x.ll])),{padding:[30,30]});if(!first&&pins[i])setTimeout(()=>pins[i].openPopup(),350)}
+ if(scroll){const el=document.getElementById("r"+i);el&&el.scrollIntoView({behavior:"smooth",block:"nearest"})}}
+const RC={};
+async function getRoute(a,b){const k=a+">"+b;if(RC[k])return RC[k];
+ try{const j=await (await fetch(`https://router.project-osrm.org/route/v1/driving/${a[1]},${a[0]};${b[1]},${b[0]}?overview=full&geometries=geojson`)).json();
+  RC[k]=j.routes[0].geometry.coordinates.map(([x,y])=>[y,x])}catch(e){const r=R0[org];RC[k]=r?r.concat([b]):[a,b]}
+ return RC[k]}
+let mover=null;
+function stopAnim(){playing=false;cancelAnimationFrame(raf);if(mover){mover.remove();mover=null}document.getElementById("play").textContent="▶ 가는 길 재생"}
+document.getElementById("play").onclick=()=>{if(playing){stopAnim();return}if(!cur)return;stopAnim();playing=true;
+ const o=ORG[org],x=data[CAT[cat].k].list[sel],n=cur.length,trail=L.polyline([],{color:css(o.c),weight:6}).addTo(route);
+ mover=L.marker(cur[0],{icon:icon("🚗",26),zIndexOffset:1000}).addTo(map);document.getElementById("play").textContent="⏹ 정지";say(`${o.i} ${o.n} 출발`);
+ const t0=performance.now(),dur=3500;
+ (function step(now){if(!playing)return;const f=Math.min(1,(now-t0)/dur),e=f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2,j=Math.max(1,Math.round(e*(n-1)));
+  trail.setLatLngs(cur.slice(0,j+1));mover.setLatLng(cur[j]);
+  if(f<1){raf=requestAnimationFrame(step);return}
+  say(`🍻 ${x.n} 도착!`);playing=false;document.getElementById("play").textContent="↻ 다시 재생";if(pins[sel])pins[sel].openPopup()})(t0)};
+const h=location.hash.slice(1);const ci=CAT.findIndex(c=>c.k===h);if(ci>=0)cat=ci;
+render();
+};
+</script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA9EFrNWCj6KPlz1Rna_ab950MeYht1uo&callback=__gl&loading=async&language=ko&region=KR"></script>
+</body></html>
