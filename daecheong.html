@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>대청호 청남대 드라이브</title>
+<meta name="description" content="동탄 출발 대청호·청남대 드라이브 2코스와 맛집, 구글맵 동선">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kkhgold.github.io/dongtan-route/daecheong.html">
+<meta property="og:title" content="🌊 동탄 출발 대청호 · 청남대 드라이브">
+<meta property="og:description" content="청남대 · 문의 호반 · 대청댐 · 명상정원 노을 — 맛집과 구글맵 동선">
+<meta property="og:image" content="https://kkhgold.github.io/dongtan-route/og-daecheong.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<style>
+:root{--bg:#f6f3ee;--card:#fff;--ink:#231d17;--sub:#6e6358;--line:#e4dccf;--accent:#b4531c;--A:#1f6f8b;--B:#c0641e;--C:#7a4fb0;--walk:#4b6b8a;--food:#c2410c;--see:#2f6fb0;--cafe:#8a6a3b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17140f;--card:#221d17;--ink:#f1ebe3;--sub:#ab9f92;--line:#3a3229}}
+:root[data-theme="dark"]{--bg:#17140f;--card:#221d17;--ink:#f1ebe3;--sub:#ab9f92;--line:#3a3229}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:15px/1.55 "Noto Sans KR",system-ui,-apple-system,sans-serif}
+.hero{padding:18px 16px 14px;background:linear-gradient(135deg,#123f5a,#1f6f8b 55%,#5aa7a0);color:#fff}
+.hero .k{font-size:12px;opacity:.85;letter-spacing:.04em}.hero h1{margin:4px 0 6px;font-size:22px;line-height:1.3}.hero p{margin:0;font-size:13px;opacity:.92;max-width:760px}
+#top{position:sticky;top:0;z-index:5;background:var(--bg)}
+.tabs{display:flex;border-bottom:1px solid var(--line);background:var(--card)}
+.tabs button{flex:1;border:0;background:none;color:var(--sub);padding:10px 4px 9px;font:700 13px/1.25 inherit;cursor:pointer;border-bottom:3px solid transparent}
+.tabs button small{display:block;font-weight:500;font-size:11px}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--cc)}
+#map{height:38vh;min-height:240px;border-bottom:1px solid var(--line)}
+.bar{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;border-bottom:1px solid var(--line);background:var(--bg)}
+.bar button,.bar a{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;font:700 13px inherit;cursor:pointer;text-decoration:none}
+.bar .play{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#toast{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(20,16,12,.85);color:#fff;padding:5px 12px;border-radius:16px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:3}
+main{max-width:760px;margin:0 auto;padding:12px 16px 30px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;color:var(--sub)}.sum b{display:block;color:var(--ink);font-size:16px}
+.lead{font-size:14px;color:var(--sub);margin:0 0 12px}
+.tl{position:relative;margin-left:6px;padding-left:18px;border-left:2px solid var(--line)}
+.tl::after{content:"";position:absolute;left:-2px;top:0;width:2px;height:var(--p,0px);background:var(--cc);transition:height .6s ease}
+.stop{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:6px;cursor:pointer;scroll-margin-top:calc(38vh + 120px)}
+.stop::before{content:"";position:absolute;left:-26px;top:13px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--cc)}
+.stop .tm{font-variant-numeric:tabular-nums;color:var(--sub);font-size:12px}.stop h4{margin:0;font-size:15px}.stop p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.stop .lk{font-size:12px;color:var(--accent);text-decoration:none;font-weight:700;margin-left:4px;white-space:nowrap}
+.stop.now{border-color:var(--cc);animation:pulse 1.4s ease-in-out infinite}.stop.now::before{background:var(--cc)}
+.stop.done{opacity:.62}.stop.done::before{background:var(--cc)}.stop.done .tm::after{content:" ✓";color:var(--cc);font-weight:800}
+@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--cc) 20%,transparent)}}
+.tag{display:inline-block;font-size:11px;padding:0 6px;border-radius:6px;margin-left:5px;vertical-align:1px;color:#fff}
+.tag.food{background:var(--food)}.tag.see{background:var(--see)}.tag.cafe{background:var(--cafe)}
+.mv{position:relative;font-size:12px;color:var(--sub);margin:-1px 0 6px 2px;padding:2px 6px;border-radius:6px;overflow:hidden}
+.mv.go{color:var(--ink);font-weight:700;background:color-mix(in srgb,var(--cc) 12%,transparent)}
+.mv.go::after{content:"";position:absolute;left:0;bottom:0;height:2px;background:var(--cc);animation:fill var(--dur,1s) ease-in-out forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+.card h3{margin:0 0 6px;font-size:15px}.card ul{margin:0;padding-left:18px}.card li{margin:3px 0;font-size:14px}
+.alt{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-top:1px solid var(--line);padding:8px 0}.alt:first-of-type{border-top:0}
+.alt b{font-size:14px}.alt p{margin:1px 0 0;font-size:13px;color:var(--sub)}.alt a{flex:0 0 auto;font-size:12px;font-weight:700;color:var(--accent);text-decoration:none}
+.note{font-size:12px;color:var(--sub)}
+.panel{display:none}.panel.on{display:block}
+@media (prefers-reduced-motion:reduce){.stop.now,.mv.go::after{animation:none}.tl::after{transition:none}}
+@media (min-width:900px){#map{height:46vh}.stop{scroll-margin-top:calc(46vh + 120px)}}
+</style></head><body>
+<header class="hero"><div class="k">동탄 출발 · 2026년 11월 말 · 승용차</div>
+<h1>🌊 대청호 · 청남대 드라이브</h1>
+<p>동탄에서 1시간 45분이면 대청호에 닿아요. 대통령 별장 <b>청남대</b>를 중심으로 호수 둘레 드라이브와 맛집을 하루 일정으로 짰어요. 맛집 별점은 구글맵 기준이고, 버튼으로 바로 길찾기를 열 수 있어요.</p></header>
+<div id="top">
+<nav class="tabs" id="tabs"></nav>
+<div style="position:relative"><div id="map"></div><div id="toast"></div></div>
+<div class="bar"><button class="play" id="play">▶ 동선 재생</button><a id="gdir" target="_blank" rel="noopener">🧭 구글맵 길찾기</a><button id="fit">🗺️ 전체 보기</button></div>
+</div>
+<main id="main"></main>
+<main style="padding-top:0"><div class="card"><h3>🧭 출발 전 체크</h3><ul>
+<li>청남대는 <b>월요일 휴관</b>(공휴일이면 다음 평일 휴관). 11월은 입장 마감 16:30, <b>12–1월은 15:30</b>이에요</li>
+<li>청남대 입장료는 어른 6,000원, 만 65세 이상 3,000원이고 주차는 무료예요</li>
+<li>해가 <b>17시 15분쯤</b> 져요. 명상정원·대청댐 노을은 16시 반쯤 도착하면 딱 좋아요</li>
+<li>호숫가는 바람이 차요. 겉옷을 하나 더 챙기세요</li>
+<li>주말 귀경길은 경부고속도로 <b>천안–오산 구간</b>이 막혀요. 일찍 출발하거나 평택제천 → 평택 우회도 생각해 두세요</li></ul></div>
+<p class="note" style="text-align:center">별점은 2026-11-21 구글맵 기준, 운영 정보는 웹 검색(청남대 안내 블로그·식신·맘맘 등) 기준이에요. 영업시간과 휴무는 바뀔 수 있으니 출발 전에 확인하세요.<br>운전 시간은 주말 오전 기준 대략값 · 지도 Google Maps · 경로 OpenStreetMap/OSRM · <a href="./">동탄 가는 길 모음</a></p></main>
+<script>
+// ---------- 구글 지도 어댑터: 기존 Leaflet 코드(L.*)를 Google Maps JS로 그대로 돌린다 ----------
+function __gl(){
+const g=google.maps, DARK=[{elementType:"geometry",stylers:[{color:"#1f2630"}]},{elementType:"labels.text.fill",stylers:[{color:"#9aa7b4"}]},{elementType:"labels.text.stroke",stylers:[{color:"#1f2630"}]},{featureType:"road",elementType:"geometry",stylers:[{color:"#323c48"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#14202c"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#26303b"}]}];
+const ll=p=>Array.isArray(p)?{lat:p[0],lng:p[1]}:p;
+const isDark=()=>{const t=document.documentElement.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;};
+let info=null;
+const tip=document.createElement("div");tip.style.cssText="position:fixed;z-index:9999;pointer-events:none;background:#fff;color:#17202b;font:12px/1.4 system-ui,sans-serif;padding:4px 8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:none;max-width:240px";
+document.body.appendChild(tip);
+const hideTip=()=>tip.style.display="none";
+function hoverTip(el,get){el.addEventListener("mouseenter",e=>{tip.innerHTML=get();tip.style.display="block";});
+  el.addEventListener("mousemove",e=>{tip.style.left=(e.clientX+12)+"px";tip.style.top=(e.clientY+12)+"px";});el.addEventListener("mouseleave",hideTip);}
+class Bounds{constructor(s,n){this.s=s;this.n=n;}
+  static of(pts){let s=[90,180],n=[-90,-180];pts.forEach(p=>{s=[Math.min(s[0],p[0]),Math.min(s[1],p[1])];n=[Math.max(n[0],p[0]),Math.max(n[1],p[1])];});return new Bounds(s,n);}
+  pad(r){const dy=(this.n[0]-this.s[0])*r,dx=(this.n[1]-this.s[1])*r;return new Bounds([this.s[0]-dy,this.s[1]-dx],[this.n[0]+dy,this.n[1]+dx]);}
+  contains(p){return p[0]>=this.s[0]&&p[0]<=this.n[0]&&p[1]>=this.s[1]&&p[1]<=this.n[1];}
+  g(){return new g.LatLngBounds(ll(this.s),ll(this.n));}}
+class Layer{constructor(){this.items=new Set();this.m=null;}
+  addTo(m){if(this.m===m)return this;this.m=m;this.items.forEach(i=>i._show(m));return this;}
+  add(i){this.items.add(i);if(this.m)i._show(this.m);}
+  remove(){this.items.forEach(i=>i._hide());this.m=null;return this;}
+  clearLayers(){this.items.forEach(i=>i._hide());this.items.clear();}}
+class Base{addTo(t){if(t instanceof Layer){this.grp=t;t.add(this);}else this._show(t);return this;}
+  remove(){if(this.grp){this.grp.items.delete(this);this.grp=null;}this._hide();return this;}}
+// HTML 마커 (divIcon / circleMarker)
+function mkHtml(B){return class Html extends g.OverlayView{
+  constructor(p,o){super();this.p=p;this.icon=o.icon;this.z=o.zIndexOffset||0;this.el=document.createElement("div");
+    this.el.style.cssText="position:absolute;cursor:pointer";this.el.addEventListener("click",e=>{e.stopPropagation();hideTip();if(this.pop)this.openPopup();});this._draw();}
+  _draw(){const i=this.icon;this.el.innerHTML=i.html;this.ax=i.iconAnchor[0];this.ay=i.iconAnchor[1];this.el.style.zIndex=this.z;if(this.lab)this.el.appendChild(this.lab);}
+  onAdd(){this.getPanes().overlayMouseTarget.appendChild(this.el);}
+  draw(){const pr=this.getProjection();if(!pr)return;const pt=pr.fromLatLngToDivPixel(new g.LatLng(this.p[0],this.p[1]));
+    this.el.style.left=(pt.x-this.ax)+"px";this.el.style.top=(pt.y-this.ay)+"px";}
+  onRemove(){this.el.remove();}
+  _show(m){this.setMap(m.g);} _hide(){this.setMap(null);}
+  addTo(t){return B.prototype.addTo.call(this,t);} remove(){return B.prototype.remove.call(this);}
+  setIcon(i){this.icon=i;this._draw();this.draw();return this;}
+  setLatLng(p){this.p=p;this.draw();return this;}
+  bindPopup(h){this.pop=h;return this;}
+  bindTooltip(h,o={}){if(o.permanent){const s=document.createElement("div");s.innerHTML=h;
+      s.style.cssText="position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;background:#fff;color:#17202b;font:600 12px/1.3 system-ui,sans-serif;padding:3px 7px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)";
+      if(o.direction==="left")s.style.right="calc(100% + 6px)";else s.style.left="calc(100% + 6px)";this.lab=s;this.el.appendChild(s);}
+    else hoverTip(this.el,()=>h);return this;}
+  openPopup(){if(!this.getMap())return this;info=info||new g.InfoWindow();info.setContent(typeof this.pop==="function"?this.pop():this.pop);
+    info.setOptions({pixelOffset:new g.Size(0,-this.ay)});info.setPosition(ll(this.p));info.open({map:this.getMap()});return this;}};}
+class Line extends Base{constructor(pts,o){super();const dash=o.dashArray?String(o.dashArray).split(/[ ,]+/).map(Number):null,w=o.weight||3,op=o.opacity??1;
+    this.l=new g.Polyline({path:pts.map(ll),strokeColor:o.color,strokeWeight:w,clickable:false,
+      strokeOpacity:dash?0:op,icons:dash?[{icon:{path:"M 0,-1 0,1",strokeOpacity:op,strokeColor:o.color,strokeWeight:w,scale:Math.max(1,dash[0]*.6)},offset:"0",repeat:((dash[0]+dash[1])*1.4)+"px"}]:[]});}
+  _show(m){this.l.setMap(m.g);} _hide(){this.l.setMap(null);}
+  setLatLngs(p){this.l.setPath(p.map(ll));return this;} bindTooltip(){return this;} bindPopup(){return this;}}
+class Circle extends Base{constructor(c,o){super();this.c=new g.Circle({center:ll(c),radius:o.radius,strokeColor:o.color,strokeWeight:o.weight||2,strokeOpacity:.8,fillColor:o.fillColor||o.color,fillOpacity:o.fillOpacity??.2,clickable:false});}
+  _show(m){this.c.setMap(m.g);} _hide(){this.c.setMap(null);} bindTooltip(){return this;} bindPopup(){return this;}}
+const Html=mkHtml(Base);
+const dot=o=>{const r=o.radius||5,w=o.weight||2,s=2*(r+w);return {html:`<div style="width:${2*r}px;height:${2*r}px;border-radius:50%;background:${o.fillColor||o.color};border:${w}px solid ${o.color||"#fff"};box-shadow:0 1px 3px rgba(0,0,0,.35)"></div>`,iconAnchor:[s/2,s/2]};};
+const pad=o=>{const p=o&&o.padding;return p?{top:p[1],bottom:p[1],left:p[0],right:p[0]}:0;};
+class Map{constructor(id){this.g=new g.Map(document.getElementById(id),{center:{lat:0,lng:0},zoom:3,gestureHandling:"greedy",
+      mapTypeControl:false,streetViewControl:false,fullscreenControl:false,clickableIcons:false,styles:isDark()?DARK:null});
+    this.g.addListener("click",()=>{if(info)info.close();});}
+  setView(p,z){this.g.setCenter(ll(p));this.g.setZoom(z);return this;}
+  getZoom(){return this.g.getZoom();}
+  getBounds(){const b=this.g.getBounds();if(!b)return new Bounds([-90,-180],[90,180]);const s=b.getSouthWest(),n=b.getNorthEast();return new Bounds([s.lat(),s.lng()],[n.lat(),n.lng()]);}
+  fitBounds(b,o){this.g.fitBounds(b.g(),pad(o));return this;}
+  flyToBounds(b,o={}){this.g.fitBounds(b.g(),pad(o));if(o.maxZoom)g.event.addListenerOnce(this.g,"idle",()=>{if(this.g.getZoom()>o.maxZoom)this.g.setZoom(o.maxZoom);});return this;}
+  flyTo(p,z){this.g.panTo(ll(p));if(z)this.g.setZoom(z);return this;}
+  panTo(p){this.g.panTo(ll(p));return this;}
+  distance(a,b){const R=6371e3,r=Math.PI/180,x=(b[0]-a[0])*r,y=(b[1]-a[1])*r,h=Math.sin(x/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+  invalidateSize(){g.event.trigger(this.g,"resize");return this;}}
+window.L={map:id=>new Map(id),tileLayer:()=>({addTo(){return this;}}),layerGroup:()=>new Layer(),
+  divIcon:o=>o,marker:(p,o)=>new Html(p,o||{}),circleMarker:(p,o)=>new Html(p,{icon:dot(o||{}),zIndexOffset:200}),
+  polyline:(p,o)=>new Line(p,o||{}),circle:(c,o)=>new Circle(c,o||{}),latLngBounds:pts=>Bounds.of(pts)};
+window.__app();
+}
+
+</script>
+<script>
+window.__app=function(){
+const R={"START-CND":{"p":[[37.20036,127.09564],[37.21737,127.09899],[37.22527,127.08267],[37.21543,127.09633],[37.13578,127.08673],[37.11441,127.11239],[36.98746,127.15667],[36.94552,127.18926],[36.8623,127.18576],[36.80581,127.16505],[36.77286,127.17832],[36.76113,127.21595],[36.74671,127.22292],[36.73201,127.26105],[36.7342,127.28894],[36.71512,127.34761],[36.6886,127.35698],[36.67549,127.37412],[36.62161,127.38519],[36.5932,127.42422],[36.56548,127.42823],[36.55673,127.46329],[36.53033,127.50599],[36.51557,127.50662],[36.5131,127.52641],[36.4968,127.51572],[36.49528,127.49513],[36.46429,127.49225]],"km":117.7,"min":107},"CND-CNJ":{"p":[[36.46429,127.49225],[36.46343,127.4922],[36.46425,127.49354],[36.46845,127.49258],[36.47048,127.49411],[36.47403,127.49284],[36.48056,127.4935],[36.4814,127.49531],[36.48242,127.49604],[36.48458,127.49466],[36.49528,127.49513],[36.49632,127.49663],[36.49839,127.49787],[36.49903,127.49953],[36.49905,127.50183],[36.49738,127.50469],[36.49641,127.50601],[36.49361,127.50722],[36.49642,127.50977],[36.49518,127.51198],[36.49612,127.51319],[36.49761,127.51297],[36.4968,127.51572],[36.49916,127.51809],[36.5007,127.51837],[36.5023,127.52116],[36.50415,127.52124],[36.50552,127.51905],[36.50729,127.52213],[36.50883,127.52292],[36.50912,127.52568],[36.5098,127.5263],[36.51284,127.52649],[36.51369,127.52578],[36.51389,127.52131],[36.51475,127.51764],[36.5157,127.51659],[36.51566,127.51523],[36.51848,127.51358],[36.51832,127.51284],[36.51588,127.5111],[36.51557,127.50662],[36.51948,127.50625],[36.5231,127.50274],[36.52202,127.4977],[36.52035,127.4969],[36.51604,127.4977],[36.51585,127.49703]],"km":14.0,"min":25},"CNJ-MUNUI":{"p":[[36.51585,127.49703],[36.51596,127.49701],[36.51604,127.4977],[36.51445,127.49799],[36.51354,127.49775],[36.51216,127.49712],[36.5115,127.49629],[36.51123,127.49609],[36.5081,127.49473]],"km":1.0,"min":2},"MUNUI-THEDC":{"p":[[36.5081,127.49473],[36.51102,127.49598],[36.51137,127.49617],[36.5115,127.49629],[36.51182,127.49673],[36.51216,127.49712],[36.51253,127.49732],[36.51323,127.4976],[36.51339,127.49779],[36.51337,127.49785],[36.51308,127.49804],[36.51296,127.4982],[36.51231,127.49859],[36.51223,127.49862],[36.51157,127.49863],[36.5109,127.49948],[36.5111,127.49982]],"km":1.0,"min":2},"THEDC-DAM":{"p":[[36.5111,127.49982],[36.51217,127.49828],[36.5069,127.49451],[36.50505,127.49177],[36.50471,127.48183],[36.50104,127.47109],[36.49902,127.46845],[36.48953,127.46034],[36.48722,127.45904],[36.47891,127.45653],[36.47573,127.45479],[36.47526,127.45601],[36.47013,127.45989],[36.46667,127.46025],[36.46532,127.45941],[36.46313,127.45993],[36.46108,127.45928],[36.45952,127.46027],[36.46055,127.46197],[36.46239,127.46291],[36.46526,127.46322],[36.46986,127.46527],[36.47484,127.47013],[36.47683,127.4746],[36.47489,127.47588],[36.47535,127.47812],[36.47399,127.47721],[36.47561,127.48071]],"km":11.9,"min":16},"DAM-START":{"p":[[36.47561,127.48071],[36.45952,127.46027],[36.48861,127.45998],[36.50135,127.47201],[36.50593,127.49386],[36.53019,127.50938],[36.56603,127.431],[36.59625,127.42203],[36.62124,127.38555],[36.67562,127.37423],[36.68869,127.35715],[36.71534,127.34758],[36.73431,127.28907],[36.73192,127.26172],[36.74681,127.22297],[36.76146,127.21561],[36.77294,127.17848],[36.80736,127.16533],[36.86228,127.18594],[36.94494,127.18956],[36.98752,127.15682],[37.11454,127.11251],[37.13584,127.08688],[37.20036,127.09564]],"km":110.3,"min":90},"CND-BUBU":{"p":[[36.46429,127.49225],[36.46343,127.4922],[36.46425,127.49354],[36.46845,127.49258],[36.47048,127.49411],[36.47403,127.49284],[36.48056,127.4935],[36.4814,127.49531],[36.48242,127.49604],[36.48458,127.49466],[36.49528,127.49513],[36.49632,127.49663],[36.49839,127.49787],[36.49903,127.49953],[36.49905,127.50183],[36.49738,127.50469],[36.49641,127.50601],[36.49361,127.50722],[36.49642,127.50977],[36.49518,127.51198],[36.49612,127.51319],[36.49761,127.51297],[36.4968,127.51572],[36.49916,127.51809],[36.5007,127.51837],[36.5023,127.52116],[36.50415,127.52124],[36.50552,127.51905],[36.50729,127.52213],[36.50883,127.52292],[36.50896,127.52511],[36.50967,127.52629],[36.51284,127.52649],[36.51369,127.52578],[36.51389,127.52131],[36.51475,127.51764],[36.5157,127.51659],[36.51566,127.51523],[36.51848,127.51358],[36.51832,127.51284],[36.51588,127.5111],[36.51557,127.50662],[36.51948,127.50625],[36.5231,127.50274],[36.5221,127.49944],[36.52221,127.49796],[36.5205,127.49692],[36.51604,127.4977],[36.51643,127.50043]],"km":14.2,"min":25},"BUBU-DAM":{"p":[[36.51643,127.50043],[36.51351,127.49774],[36.51236,127.49855],[36.50582,127.49324],[36.50474,127.49011],[36.50471,127.48183],[36.50149,127.47196],[36.49902,127.46845],[36.48925,127.46013],[36.47969,127.45685],[36.47573,127.45479],[36.47526,127.45601],[36.47013,127.45989],[36.46667,127.46025],[36.46532,127.45941],[36.46313,127.45993],[36.46108,127.45928],[36.45952,127.46027],[36.46055,127.46197],[36.46239,127.46291],[36.46526,127.46322],[36.46986,127.46527],[36.47484,127.47013],[36.47683,127.4746],[36.47489,127.47588],[36.47535,127.47812],[36.47399,127.47721],[36.47561,127.48071]],"km":12.3,"min":16},"DAM-PANG":{"p":[[36.47561,127.48071],[36.47489,127.47588],[36.47683,127.4746],[36.47504,127.4704],[36.46986,127.46527],[36.46055,127.46197],[36.45768,127.45688],[36.45713,127.45253],[36.4554,127.45102],[36.45525,127.44058],[36.45108,127.42875],[36.44105,127.42864],[36.42933,127.42143],[36.42329,127.41943],[36.41014,127.42515],[36.40246,127.42242],[36.39827,127.42335],[36.39126,127.42071],[36.38505,127.42528],[36.3707,127.42901],[36.36994,127.4333],[36.368,127.4338],[36.36789,127.43635],[36.35864,127.44964],[36.35685,127.45412],[36.35512,127.45486],[36.35519,127.45941],[36.35734,127.46094],[36.3562,127.46144],[36.35552,127.4694],[36.34783,127.47486],[36.34678,127.47703],[36.34661,127.48213],[36.35071,127.488],[36.35151,127.49807],[36.36355,127.50115],[36.36923,127.50748],[36.3744,127.50368],[36.37729,127.50419]],"km":27.3,"min":36},"PANG-MYEONG":{"p":[[36.37729,127.50419],[36.37677,127.50417],[36.37571,127.50323],[36.37524,127.50371],[36.3744,127.50368],[36.37254,127.50572],[36.37058,127.50611],[36.37001,127.50716],[36.36923,127.50748],[36.36874,127.50622],[36.36355,127.50115],[36.3579,127.49989],[36.355,127.49846],[36.35348,127.49875],[36.35201,127.49827],[36.35057,127.48706],[36.34961,127.48537],[36.34712,127.48289],[36.34658,127.48175],[36.34646,127.48048],[36.3473,127.47583],[36.34768,127.47527],[36.34895,127.47452],[36.3493,127.4751],[36.35015,127.47527],[36.35311,127.47463],[36.35278,127.47576],[36.35367,127.47751],[36.3542,127.47738],[36.35493,127.47651],[36.35555,127.47672],[36.35654,127.47793],[36.35762,127.48059],[36.35979,127.48136],[36.3621,127.47914],[36.36452,127.47618],[36.36832,127.47501],[36.37131,127.47597],[36.37513,127.47501],[36.37902,127.47784],[36.37928,127.47933],[36.37901,127.48015]],"km":10.1,"min":17},"MYEONG-GARAE":{"p":[[36.37901,127.48015],[36.37928,127.47933],[36.37922,127.47886],[36.37901,127.47795],[36.37902,127.47784],[36.37561,127.47536],[36.37548,127.47525],[36.37553,127.47515],[36.37556,127.47488]],"km":0.7,"min":2},"GARAE-START":{"p":[[36.37556,127.47488],[36.3492,127.47502],[36.35536,127.44569],[36.3647,127.45197],[36.37313,127.43193],[36.397,127.41881],[36.4611,127.41594],[36.47872,127.43057],[36.52386,127.43282],[36.58859,127.42711],[36.62124,127.38555],[36.67562,127.37423],[36.68869,127.35715],[36.71491,127.34799],[36.73431,127.28907],[36.73192,127.26172],[36.77378,127.17808],[36.80736,127.16533],[36.86228,127.18594],[36.94494,127.18956],[36.98752,127.15682],[37.11454,127.11251],[37.13584,127.08688],[37.20036,127.09564]],"km":120.9,"min":97}};
+const P={START:[37.20036,127.09558],CND:[36.46431,127.49216],CNDM:[36.46239,127.48757],CNJ:[36.51587,127.49715],MUNUI:[36.50836,127.49381],THEDC:[36.51131,127.49962],
+DAM:[36.47442,127.48151],BUBU:[36.51647,127.50042],PANG:[36.37782,127.50407],MYEONG:[36.3797,127.48565],GARAE:[36.37569,127.4749]};
+const gq=q=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+// stop: [시간, 이름, 설명, 키, 이동수단, 태그, 이동메모, 구글맵 검색어]
+const C=[
+{id:"A",name:"청남대 + 문의 호반",sub:"하루 · 약 255km",c:"--A",go:"08:30 출발 추천",km:"약 255km",drive:"약 4시간",
+ lead:"대통령 별장 청남대를 여유 있게 둘러보고, 문의면에서 솥밥으로 점심을 먹어요. 문의문화유산단지에서 호수를 내려다보고, 호숫가 카페를 들른 뒤 대청댐에서 해 질 무렵 귀가해요.",
+ stops:[["08:30","동탄 출발","경부고속도로 → 남청주IC (또는 청주IC) → 문의 방향","START",null,null,null,null],
+ ["10:15","청남대 주차장","무료 주차. 입장료 어른 6,000원. 11월 입장 마감 16:30, 12월부터 15:30 (월요일 휴관)","CND","car","see","약 1시간 45분 · 118km","청남대 주차장1"],
+ ["10:30","청남대 본관 · 대통령길","본관과 유품 전시관을 보고 호숫가 대통령길을 걸어요. 2026년 3월 개통한 모노레일로 제1전망대에 오를 수 있어요. 2–3시간","CNDM","walk","see","도보 5분","청남대"],
+ ["12:40","청주솥밥 청남집","솥밥 정식 ★4.8 (구글 리뷰 388). 문의 시내 골목","CNJ","car","food","약 25분 · 14km","청주솥밥 청남집"],
+ ["13:50","문의문화유산단지 · 대청호미술관","언덕 위 한옥 마을에서 대청호 전망. 바로 옆 시립미술관은 무료","MUNUI","car","see","차 2분","문의문화유산단지"],
+ ["14:50","더 대청호","호수 뷰 대형 베이커리 카페 ★4.2. 창가 자리 추천","THEDC","car","cafe","차 3분","더 대청호 카페"],
+ ["15:50","대청댐 물문화관 · 대청공원","댐 위 전망과 호수 노을. 해가 17시 15분쯤 져요","DAM","car","see","약 16분 · 12km","대청댐 물문화관"],
+ ["17:10","귀가","신탄진IC → 경부고속도로. 주말 저녁 천안–오산 구간 정체 주의","START","car",null,"약 1시간 30분 · 110km",null]],
+ alts:[["호수식당","돌솥청국장정식 (약 14,000원) ★4.2 · 리뷰 357","호수식당 청주 문의면 문의시내로 22"],
+ ["부부농장 문의시내점","고추장 삼겹살 ★4.1 · 리뷰 1,155. 문의 대표 고깃집","부부농장 문의시내점"],
+ ["청남생선국수","어탕국수 (약 8,000원). 가볍게 한 그릇","청남생선국수 문의면"]]},
+{id:"B",name:"대청호 한 바퀴",sub:"하루 · 약 300km",c:"--B",go:"08:30 출발 추천",km:"약 300km",drive:"약 5시간",
+ lead:"오전엔 청남대, 점심은 문의 고추장 삼겹살. 대청댐을 건너 대전 쪽 호반길(회남로)로 달려 카페에 들르고, 명상정원에서 노을을 본 뒤 저녁까지 먹고 돌아와요.",
+ stops:[["08:30","동탄 출발","경부고속도로 → 남청주IC → 문의 방향","START",null,null,null,null],
+ ["10:15","청남대","본관 · 대통령길 · 모노레일 전망대. 2시간 정도 (월요일 휴관)","CND","car","see","약 1시간 45분 · 118km","청남대"],
+ ["12:40","부부농장 문의시내점","고추장 삼겹살 ★4.1 (리뷰 1,155). 주말 점심엔 대기가 있어요","BUBU","car","food","약 25분 · 14km","부부농장 문의시내점"],
+ ["14:00","대청댐 물문화관","댐 전망대에서 호수 한눈에. 주차 무료","DAM","car","see","약 16분 · 12km","대청댐 물문화관"],
+ ["15:00","팡시온","대청호 대표 호수 뷰 카페 ★4.1 (리뷰 2,097). 회남로 호반 드라이브 중간","PANG","car","cafe","약 36분 · 27km","팡시온 대전 동구"],
+ ["16:30","대청호 명상정원","드라마 촬영지로 알려진 물가 나무와 데크길. 입장·주차 무료. 노을 17시 15분쯤","MYEONG","car","see","약 17분 · 10km","대청호 명상정원"],
+ ["17:30","가래울","명상정원 바로 옆 한식집 ★4.2 (리뷰 222). 저녁 먹고 출발","GARAE","car","food","차 2분","가래울 대전 동구 추동"],
+ ["19:00","귀가","판암IC 또는 신탄진IC → 경부고속도로","START","car",null,"약 1시간 40분 · 121km",null]],
+ alts:[["두두당","대청댐 아래 한옥 카페 ★4.1 · 리뷰 819","두두당 대전 대덕구 대청로 234"],
+ ["청주솥밥 청남집","솥밥 정식 ★4.8 · 문의 시내 (점심 대안)","청주솥밥 청남집"],
+ ["호수식당","돌솥청국장정식 ★4.2 · 문의 시내 (점심 대안)","호수식당 청주 문의면 문의시내로 22"]]}];
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const MODE={car:{i:"🚗",l:"자동차",d:null},walk:{i:"🚶",l:"도보",d:"2 8"}};
+const icon=(t,s=24)=>L.divIcon({html:`<div style="font-size:${s}px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">${t}</div>`,iconSize:[s,s],iconAnchor:[s/2,s/2]});
+const num=(n,c,on)=>L.divIcon({html:`<div style="width:24px;height:24px;border-radius:50%;background:${on?c:"#fff"};color:${on?"#fff":c};border:2px solid ${c};font:800 12px/20px system-ui;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.35)">${n}</div>`,iconSize:[24,24],iconAnchor:[12,12]});
+function interp(a,b,n=20){const o=[];for(let k=0;k<=n;k++)o.push([a[0]+(b[0]-a[0])*k/n,a[1]+(b[1]-a[1])*k/n]);return o}
+const path=(a,b,m)=>m==="walk"?interp(P[a],P[b]):(R[a+"-"+b]||{p:interp(P[a],P[b])}).p;
+const map=L.map("map").setView(P.START,10);
+const layer=L.layerGroup().addTo(map),anim=L.layerGroup().addTo(map);
+let ci=0,legs=[],pins=[],mover=null,playing=false,raf=0,timer=0;
+const toast=document.getElementById("toast");
+function say(t){toast.innerHTML=t;toast.style.opacity=1;clearTimeout(say.t);say.t=setTimeout(()=>toast.style.opacity=0,2600)}
+document.getElementById("tabs").innerHTML=C.map((c,i)=>`<button data-i="${i}" style="--cc:var(${c.c})">${c.id}. ${c.name}<small>${c.sub}</small></button>`).join("");
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{show(+b.dataset.i);window.scrollTo({top:0})});
+function show(i){stop();ci=i;const c=C[i],col=css(c.c);document.documentElement.style.setProperty("--cc",col);
+ document.querySelectorAll("#tabs button").forEach((b,k)=>b.classList.toggle("on",k===i));
+ layer.clearLayers();legs=[];
+ c.stops.forEach((s,k)=>{if(k>0)legs.push({k,m:s[4],pts:path(c.stops[k-1][3],s[3],s[4])})});
+ legs.forEach(l=>L.polyline(l.pts,{color:col,weight:4,opacity:.3,dashArray:MODE[l.m].d}).addTo(layer));
+ pins=c.stops.map((s,k)=>k===c.stops.length-1&&s[3]==="START"?null:
+   L.marker(P[s[3]],{icon:s[3]==="START"?icon("🏠",24):num(k,col,false),zIndexOffset:300}).bindPopup(`<b>${s[1]}</b><br>${s[0]} · ${s[2]}${s[7]?`<br><a target="_blank" rel="noopener" href="${gq(s[7])}">구글맵에서 보기</a>`:""}`).addTo(layer));
+ c.alts.forEach(a=>{});
+ fit();
+ const carStops=c.stops.filter((s,k)=>k>0&&k<c.stops.length-1&&s[4]==="car").map(s=>P[s[3]].join(","));
+ document.getElementById("gdir").href=`https://www.google.com/maps/dir/?api=1&origin=${P.START.join(",")}&destination=${P.START.join(",")}&waypoints=${encodeURIComponent(carStops.join("|"))}&travelmode=driving`;
+ let h=`<div class="sum"><div>출발<b>${c.go.replace(" 출발 추천","")}</b></div><div>총 거리<b>${c.km}</b></div><div>운전<b>${c.drive}</b></div></div><p class="lead">${c.lead}</p><div class="tl" id="tl">`;
+ c.stops.forEach((s,k)=>{if(k>0){const M=MODE[s[4]];h+=`<div class="mv" id="mv${k}">${M.i} ${M.l} · ${s[6]}</div>`}
+  const tg=s[5]?`<span class="tag ${s[5]}">${{food:"맛집",see:"명소",cafe:"카페"}[s[5]]}</span>`:"";
+  h+=`<div class="stop" id="s${k}" data-k="${k}"><div class="tm">${s[0]}</div><h4>${s[1]}${tg}${s[7]?`<a class="lk" target="_blank" rel="noopener" href="${gq(s[7])}">지도 →</a>`:""}</h4>${s[2]?`<p>${s[2]}</p>`:""}</div>`});
+ h+=`</div><div class="card"><h3>🍽️ 근처 맛집 후보</h3>${c.alts.map(a=>`<div class="alt"><div><b>${a[0]}</b><p>${a[1]}</p></div><a target="_blank" rel="noopener" href="${gq(a[2])}">구글맵 →</a></div>`).join("")}</div>`;
+ document.getElementById("main").innerHTML=h;
+ document.querySelectorAll(".stop").forEach(el=>el.onclick=e=>{if(e.target.closest("a"))return;stop();const k=+el.dataset.k,s=c.stops[k];mark(k);map.flyTo(P[s[3]],15);if(pins[k])setTimeout(()=>pins[k].openPopup(),400)});
+ try{history.replaceState(null,"","#"+c.id)}catch(e){}}
+function fit(){map.fitBounds(L.latLngBounds(C[ci].stops.map(s=>P[s[3]])),{padding:[30,30]})}
+function mark(k){document.querySelectorAll(".stop").forEach((e,j)=>{e.classList.toggle("now",j===k)});pins.forEach((p,j)=>p&&j>0&&p.setIcon(num(j,css(C[ci].c),j===k)))}
+function stop(){playing=false;cancelAnimationFrame(raf);clearTimeout(timer);if(mover){mover.remove();mover=null}anim.clearLayers();
+ document.querySelectorAll(".stop.done").forEach(e=>e.classList.remove("done"));document.querySelectorAll(".mv.go").forEach(e=>e.classList.remove("go"));
+ const tl=document.getElementById("tl");if(tl)tl.style.removeProperty("--p");document.getElementById("play").textContent="▶ 동선 재생"}
+function fillTo(k){const el=document.getElementById("s"+k);document.getElementById("tl").style.setProperty("--p",(el.offsetTop+20)+"px");
+ document.querySelectorAll(".stop").forEach((e,j)=>e.classList.toggle("done",j<k))}
+function play(){if(playing){stop();return}stop();playing=true;const c=C[ci],col=css(c.c);let i=0;
+ document.getElementById("play").textContent="⏹ 정지";mark(0);fillTo(0);say(`<b>${c.id}. ${c.name}</b> · ${c.go}`);
+ mover=L.marker(P.START,{icon:icon("🚗",26),zIndexOffset:1000}).addTo(map);
+ function next(){if(!playing)return;if(i>=legs.length){say("🌊 드라이브 끝! 조심히 귀가하세요");playing=false;document.querySelectorAll(".stop").forEach(e=>e.classList.add("done"));document.getElementById("play").textContent="↻ 다시 재생";return}
+  const l=legs[i],far=map.distance(l.pts[0],l.pts.at(-1))>8000;
+  if(far)map.fitBounds(L.latLngBounds(l.pts),{padding:[40,40]});else map.flyTo(l.pts.at(-1),14);
+  timer=setTimeout(()=>run(l),far?900:600)}
+ function run(l){const n=l.pts.length,d=map.distance(l.pts[0],l.pts[n-1])/1000,dur=Math.min(3200,Math.max(1200,700+Math.sqrt(d)*300));
+  const tr=L.polyline([],{color:col,weight:5,dashArray:MODE[l.m].d}).addTo(anim);mover.setIcon(icon(MODE[l.m].i,26));
+  const mv=document.getElementById("mv"+l.k);if(mv){mv.style.setProperty("--dur",dur+"ms");mv.classList.add("go");
+   const r=mv.getBoundingClientRect(),top=document.getElementById("top").offsetHeight;if(r.top<top||r.bottom>innerHeight)mv.scrollIntoView({behavior:"smooth",block:"center"})}
+  const t0=performance.now();
+  (function step(now){if(!playing)return;const f=Math.min(1,(now-t0)/dur),e=f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2,j=Math.max(1,Math.round(e*(n-1)));
+   tr.setLatLngs(l.pts.slice(0,j+1));mover.setLatLng(l.pts[j]);
+   if(f<1){raf=requestAnimationFrame(step);return}
+   if(mv)mv.classList.remove("go");const s=C[ci].stops[l.k];mark(l.k);fillTo(l.k);
+   say(`${s[5]==="food"?"🍽️":s[3]==="START"?"🏠":"📍"} ${s[0]} ${s[1]}`);if(pins[l.k])pins[l.k].openPopup();
+   i++;timer=setTimeout(next,s[5]==="food"?1300:900)})(t0)}
+ next()}
+document.getElementById("play").onclick=play;document.getElementById("fit").onclick=()=>{stop();fit()};
+const h0=C.findIndex(c=>"#"+c.id===location.hash);show(h0<0?0:h0);
+};
+</script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA9EFrNWCj6KPlz1Rna_ab950MeYht1uo&callback=__gl&loading=async&language=ko&region=KR"></script>
+</body></html>
