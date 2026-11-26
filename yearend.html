@@ -1,0 +1,262 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>성탄주간 송년회</title>
+<meta property="og:title" content="2026 송년회 · 양재 vs 강남">
+<meta property="og:description" content="12/21~24 주중 · 한우·돼지·장어·회 24곳 가격비교 · 골라서 단톡방에 붙여 넣기">
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 레이아웃: 위는 투표 패널(결정할 것 4가지), 아래는 이동·가격 비교와 식당 카드. 한 줄 세로 흐름, 넓으면 식당 2열 */
+:root{
+  --bg:#f4f5f2; --card:#ffffff; --ink:#1b2420; --sub:#5d6862; --line:#dde2dc;
+  --pine:#1f4d3a; --pine-ink:#ffffff; --ember:#b8461f; --soft:#e9efe9;
+  --hanwoo:#9b2c2c; --pork:#c0577a; --eel:#9a6a1c; --sashimi:#1f7a8c;
+  --display:"Black Han Sans","IBM Plex Sans KR",system-ui,sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121815; --card:#1a221e; --ink:#e8eee9; --sub:#9aa8a0; --line:#2b3631;
+  --pine:#3f8a68; --pine-ink:#0d1411; --ember:#e0794f; --soft:#22302a;
+  --hanwoo:#e07272; --pork:#e58fae; --eel:#d6a34f; --sashimi:#5cc0d2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --card:#1a221e; --ink:#e8eee9; --sub:#9aa8a0; --line:#2b3631;
+  --pine:#3f8a68; --pine-ink:#0d1411; --ember:#e0794f; --soft:#22302a;
+  --hanwoo:#e07272; --pork:#e58fae; --eel:#d6a34f; --sashimi:#5cc0d2; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.wrap{max-width:880px;margin:0 auto;display:grid;gap:22px}
+header.top{padding-block:26px 4px;display:grid;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--ember);font-weight:700}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,7vw,44px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{color:var(--sub);margin:0;max-width:62ch}
+.lede b{color:var(--ink)}
+h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0;text-wrap:balance}
+.sec{display:grid;gap:12px}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sechead p{margin:0;color:var(--sub);font-size:13px}
+/* 투표 패널 */
+.vote{background:var(--pine);color:var(--pine-ink);border-radius:16px;padding:18px;display:grid;gap:16px}
+.vote h2{color:var(--pine-ink)}
+.vstat{font-size:13px;opacity:.85}
+.q{display:grid;gap:8px}
+.q .lab{font-size:12px;letter-spacing:.08em;font-weight:700;opacity:.85}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.chips.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:520px){.chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.chip{appearance:none;font:inherit;text-align:left;border:1.5px solid color-mix(in srgb,var(--pine-ink) 35%,transparent);background:transparent;color:var(--pine-ink);border-radius:12px;padding:10px 12px;cursor:pointer;display:grid;gap:2px;min-width:0}
+.chip:focus-visible,.heart:focus-visible,.seg button:focus-visible,a:focus-visible,.btn:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+.chip .t{font-weight:700}
+.chip .c{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.chip[aria-pressed="true"]{background:var(--pine-ink);color:var(--pine);border-color:var(--pine-ink)}
+.chip .bar{height:4px;border-radius:2px;background:color-mix(in srgb,currentColor 25%,transparent);overflow:hidden;margin-top:4px}
+.chip .bar i{display:block;height:100%;background:currentColor;width:0;transition:width .3s}
+.notice{font-size:13px;background:color-mix(in srgb,var(--pine-ink) 12%,transparent);border-radius:10px;padding:10px 12px;display:grid;gap:8px}
+.notice[hidden]{display:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{appearance:none;font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 14px;background:var(--pine-ink);color:var(--pine);cursor:pointer}
+.notice input{font:inherit;border-radius:8px;border:1px solid transparent;padding:8px 10px;min-width:0;flex:1}
+.lead{display:grid;gap:6px;font-size:14px}
+.lead ol{margin:0;padding-left:20px}
+/* 표 */
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:14px}
+th{font-size:12px;color:var(--sub);font-weight:500;letter-spacing:.04em}
+tr:last-child td{border-bottom:0}
+td .m{font-weight:700;font-size:16px}
+td .r{font-size:12px;color:var(--sub)}
+td a{color:var(--sub);font-size:12px}
+tfoot td{background:var(--soft);font-weight:700}
+.win{color:var(--ember)}
+/* 필터 */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);flex-wrap:wrap}
+.seg button{appearance:none;font:inherit;font-size:13px;border:0;background:transparent;color:var(--ink);padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+/* 메뉴별 평균 */
+.avg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.avg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.avg div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:2px;min-width:0}
+.avg b{font-size:13px}
+.avg span{font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
+/* 식당 카드 */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;min-width:0;position:relative}
+.rc .hd{display:flex;gap:10px;align-items:flex-start}
+.rc .nm{font-weight:700;font-size:16px;line-height:1.3;min-width:0;overflow-wrap:anywhere}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;color:#fff;margin-right:6px;vertical-align:2px}
+.rc .meta{font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums}
+.rc .meta b{color:var(--ink)}
+.heart{appearance:none;font:inherit;margin-left:auto;flex:none;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.heart[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:#fff}
+.heart:disabled{opacity:.45;cursor:default}
+.who{font-size:12px;color:var(--ember);min-height:0}
+.range{display:grid;gap:4px}
+.track{position:relative;height:10px;border-radius:5px;background:var(--soft)}
+.track i{position:absolute;top:0;bottom:0;border-radius:5px}
+.track i.open{background-image:linear-gradient(90deg,currentColor 60%,transparent)}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+.pr{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.pr b{font-size:15px}
+.links{display:flex;gap:12px;font-size:13px;flex-wrap:wrap}
+.links a{color:var(--pine);font-weight:500}
+.foot{font-size:12px;color:var(--sub);display:grid;gap:4px}
+.foot p{margin:0}
+@media (prefers-reduced-motion:reduce){.chip .bar i{transition:none}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">2026 송년회 · 6명 · 성탄절 주간</div>
+  <h1>양재 vs 강남, 무엇을 먹을까</h1>
+  <p class="lede"><b>12/21(월)~12/24(목)</b> 중 하루 저녁. 동탄·판교·부천에서 모이기 좋은 <b>양재역</b>과 <b>강남역</b> 근처 한우·돼지·장어·회 식당 24곳을 구글 평점과 가격대로 비교했어요. 아래에서 날짜·장소·메뉴·식당을 고르고 <b>내 선택 복사</b>를 눌러 단톡방에 붙여 주세요.</p>
+</header>
+
+<section class="vote" aria-labelledby="vh">
+  <div class="sechead"><h2 id="vh">투표</h2><span class="vstat" id="vstat">골라서 복사 → 단톡방에 붙여 넣기</span></div>
+  <div class="q"><div class="lab">가능한 날짜 (여러 개)</div><div class="chips" id="q-date"></div></div>
+  <div class="q"><div class="lab">장소</div><div class="chips two" id="q-area"></div></div>
+  <div class="q"><div class="lab">먹고 싶은 메뉴 (여러 개)</div><div class="chips" id="q-food"></div></div>
+  <div class="q"><div class="lab">내가 고른 식당 (아래 카드의 ♡, 최대 3곳)</div><div class="lead" id="lead"><span class="vstat">아직 고른 식당이 없어요. 아래 카드에서 ♡를 눌러 주세요.</span></div></div>
+  <div class="notice" id="fallback">
+    <span id="fbmsg">이 화면에서는 투표가 저장되지 않아요. 고른 뒤 아래 버튼으로 복사해서 단톡방에 붙여 주세요.</span>
+    <div class="row"><input id="fbname" placeholder="이름" aria-label="이름"><button class="btn" id="fbcopy">내 선택 복사</button></div>
+    <span id="fbdone" class="vstat"></span>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="th">
+  <div class="sechead"><h2 id="th">어디서 모이면 덜 힘들까</h2><p>대중교통 · 평일 퇴근시간 기준 대략</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>출발</th><th>→ 양재역</th><th>→ 강남역</th></tr></thead>
+    <tbody id="tbody"></tbody>
+    <tfoot><tr><td>3곳 합계</td><td id="sum-yj"></td><td id="sum-gn"></td></tr></tfoot>
+  </table></div>
+  <p class="lede" style="font-size:13px">판교는 신분당선 한 번이면 어디든 15분 남짓이에요. 동탄은 양재가 조금 가깝고, 부천은 강남이 조금 가까워서 합계는 거의 같아요. 연말 평일 저녁엔 경부고속도로가 막히니 차보다는 지하철을 추천해요.</p>
+</section>
+
+<section class="sec" aria-labelledby="ph">
+  <div class="sechead"><h2 id="ph">가격 비교</h2><p>1인 가격대 · 구글 지도 이용자 기준</p></div>
+  <div class="avg" id="avg"></div>
+  <div class="filters">
+    <div class="seg" id="f-area" role="group" aria-label="지역"></div>
+    <div class="seg" id="f-food" role="group" aria-label="메뉴"></div>
+    <div class="seg" id="f-sort" role="group" aria-label="정렬"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer class="foot">
+  <p>평점·리뷰 수·가격대·영업시간은 2026-11-26 구글 지도 기준이에요. 가격대는 이용자가 남긴 1인 지출 범위라 실제 메뉴 가격과 다를 수 있고, 6인 예상은 가격대 가운데 값 × 6이에요 (술값 별도).</p>
+  <p>이동 시간은 노선 기준 대략값이에요. 출발 전 '대중교통 길찾기' 링크로 확인하세요. 6인 룸·예약 가능 여부는 식당에 전화로 확인하세요. 성탄 전날(12/24)은 예약이 일찍 차요.</p>
+</footer>
+</div>
+
+<script>
+const REST=[{"id": "ChIJN2s0cgChfDURhulyiVjhW9s", "a": "yj", "c": "hanwoo", "name": "우대포 양재점", "r": 4.8, "n": 61, "addr": "서울특별시 서초구 강남대로47길 20 1층", "pr": [20000, 50000], "url": "https://maps.google.com/?cid=15806475087566268806&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 10, "hours": "오전 11:30 ~ 오후 10:30"}, {"id": "ChIJ23wMHUmhfDURIxIhYzSS2QI", "a": "yj", "c": "hanwoo", "name": "자인뭉티기", "r": 4.4, "n": 575, "addr": "서울특별시 서초구 서초동 1363-7", "pr": [30000, 80000], "url": "https://maps.google.com/?cid=205356011721134627&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 4, "hours": "오전 11:30 ~ 오후 10:00"}, {"id": "ChIJAZrt-NmnfDURMjX7fcJoU6w", "a": "yj", "c": "hanwoo", "name": "우상화로구이 강남 매봉역점", "r": 5, "n": 152, "addr": "서울특별시 강남구 논현로34길 26", "pr": [40000, 90000], "url": "https://maps.google.com/?cid=12417383782137148722&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 15, "hours": "오전 11:00 ~ 오후 10:00"}, {"id": "ChIJp07xLk-hfDURK9u_jim4C38", "a": "yj", "c": "pork", "name": "서초목살", "r": 4.5, "n": 135, "addr": "서울특별시 서초구 강남대로43길 15 1 층", "pr": [20000, 40000], "url": "https://maps.google.com/?cid=9154613156188773163&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 7, "hours": "오전 11:00 ~ 오후 10:00"}, {"id": "ChIJ3QcTei2hfDURLrVdeLzhDRs", "a": "yj", "c": "pork", "name": "솥두껍 양재본점", "r": 4.7, "n": 59, "addr": "서울특별시 서초구 서초동 1357-5", "pr": [20000, 30000], "url": "https://maps.google.com/?cid=1949462413310801198&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 10, "hours": "오후 4:00~11:00"}, {"id": "ChIJAwDHUTWhfDURX3bw7wFl3gc", "a": "yj", "c": "pork", "name": "삼겹사랑 양재본점", "r": 4.3, "n": 205, "addr": "서울특별시 서초구 양재동 20-32 번지 1 층", "pr": [20000, 30000], "url": "https://maps.google.com/?cid=567001662090147423&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 13, "hours": "오전 11:00 ~ 오후 10:00"}, {"id": "ChIJN_JS7-qhfDUR5TEIyZQ-hyQ", "a": "yj", "c": "eel", "name": "장수촌풍천장어", "r": 4.8, "n": 112, "addr": "서울특별시 강남구 도곡로4길 6", "pr": [30000, 80000], "url": "https://maps.google.com/?cid=2632141315970183653&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 10, "hours": "오전 10:00 ~ 오후 10:00"}, {"id": "ChIJ_eLsj2ahfDURj-m-jJjvTFc", "a": "yj", "c": "eel", "name": "우나유", "r": 4.4, "n": 166, "addr": "서울특별시 서초구 서운로11길 35 서흥빌딩 1층", "pr": [30000, 40000], "url": "https://maps.google.com/?cid=6290666218005129615&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 13, "hours": "오전 10:30 ~ 오후 9:30"}, {"id": "ChIJyVXfOgGnfDURtxuuWbl0-ts", "a": "yj", "c": "eel", "name": "양심장어 강남도곡점", "r": 4.9, "n": 295, "addr": "서울특별시 강남구 남부순환로 2728 1층 102호", "pr": null, "url": "https://maps.google.com/?cid=15851110177906236343&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 15, "hours": "오전 11:00 ~ 오후 11:00"}, {"id": "ChIJzwsMMAChfDURFBlhgk1xYB4", "a": "yj", "c": "sashimi", "name": "석문어 양재점", "r": 4.8, "n": 155, "addr": "서울특별시 서초구 강남대로37길 46", "pr": [20000, 30000], "url": "https://maps.google.com/?cid=2188873996615883028&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 5, "hours": null}, {"id": "ChIJs76L1QmhfDURw0i07_qwwps", "a": "yj", "c": "sashimi", "name": "통영항 수산민족 양재점", "r": 4.5, "n": 62, "addr": "서울특별시 서초구 남부순환로350길 19-5", "pr": [30000, 40000], "url": "https://maps.google.com/?cid=11223727813170579651&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 3, "hours": null}, {"id": "ChIJt45zvUqhfDURryR0w4DuTvU", "a": "yj", "c": "sashimi", "name": "해우름", "r": 4.4, "n": 335, "addr": "서울특별시 서초구 양재동 16-1", "pr": [20000, 60000], "url": "https://maps.google.com/?cid=17676327824278168751&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 10, "hours": "오후 2:00~11:00"}, {"id": "ChIJlVFiAxWhfDURi9K9EWAnGxU", "a": "gn", "c": "hanwoo", "name": "전설의 우대갈비 강남", "r": 4.9, "n": 2923, "addr": "서울특별시 강남구 역삼동 819", "pr": null, "url": "https://maps.google.com/?cid=1520852592735670923&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 3, "hours": "오전 11:10 ~ 오후 9:50"}, {"id": "ChIJ_WS1tVmhfDURR_ziPZBsCLo", "a": "gn", "c": "hanwoo", "name": "일편등심 강남점", "r": 4.8, "n": 460, "addr": "서울특별시 강남구 테헤란로1길 20", "pr": [100000, null], "url": "https://maps.google.com/?cid=13405083657637657671&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 3, "hours": "오전 11:00 ~ 오후 11:00"}, {"id": "ChIJwbdTVwChfDURHIbuY0n88r0", "a": "gn", "c": "hanwoo", "name": "흑우정 강남역점", "r": 4.9, "n": 125, "addr": "서울특별시 서초구 강남대로69길 10 서호빌딩 지하 1층", "pr": [50000, 100000], "url": "https://maps.google.com/?cid=13687279609671747100&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 9, "hours": "오전 11:00 ~ 오후 10:00"}, {"id": "ChIJE3rSelihfDUR9CwRy4REKik", "a": "gn", "c": "pork", "name": "고기꾼김춘배 강남점", "r": 4.8, "n": 1363, "addr": "서울특별시 강남구 강남대로100길 13", "pr": [30000, 80000], "url": "https://maps.google.com/?cid=2966258641710165236&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 8, "hours": "오후 1:00~10:30"}, {"id": "ChIJlboYJwCjfDUR5wnuK30v9R0", "a": "gn", "c": "pork", "name": "돼봉삼겹살 신논현점", "r": 4.9, "n": 359, "addr": "서울특별시 강남구 봉은사로2길 21 1층", "pr": [20000, 50000], "url": "https://maps.google.com/?cid=2158683811048458727&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 11, "hours": "오전 11:30 ~ 오전 5:00"}, {"id": "ChIJfbjz6v2jfDUR3vu_i2CScjo", "a": "gn", "c": "pork", "name": "돈육지존 강남", "r": 4.8, "n": 148, "addr": "서울특별시 강남구 테헤란로19길 18 1층", "pr": [20000, 30000], "url": "https://maps.google.com/?cid=4211589544903965662&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 11, "hours": "오전 11:00 ~ 오후 2:30, 오후 4:00~10:00"}, {"id": "ChIJiQnDYwChfDUR7AcQDmSWujU", "a": "gn", "c": "eel", "name": "양산도 역삼점", "r": 5, "n": 1052, "addr": "서울특별시 강남구 논현로85길 70", "pr": [20000, 30000], "url": "https://maps.google.com/?cid=3871572186155190252&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 7, "hours": "오전 11:00 ~ 오후 3:00, 오후 5:00~9:00"}, {"id": "ChIJcXakVfujfDURuEWthxaNc1A", "a": "gn", "c": "eel", "name": "남서울민물장어", "r": 4.3, "n": 483, "addr": "서울특별시 강남구 논현동 204-3", "pr": [40000, 100000], "url": "https://maps.google.com/?cid=5797132273261036984&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 16, "hours": "오후 12:00~10:00"}, {"id": "ChIJeeQjPT2hfDUR--4xLOqZSdY", "a": "gn", "c": "eel", "name": "장심도 강남", "r": 5, "n": 22, "addr": "서울특별시 장심도 지하2층 363 KR 서울특별시 서초구 강남대로", "pr": [20000, 70000], "url": "https://maps.google.com/?cid=15441042028459323131&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 5, "hours": "오전 11:00 ~ 오후 10:00"}, {"id": "ChIJV1G2HgChfDURoxyJ3CMqT0M", "a": "gn", "c": "sashimi", "name": "다미선 강남", "r": 4.9, "n": 157, "addr": "서울특별시 서초구 강남대로 365 대우도씨에빛2오피스텔", "pr": [30000, 40000], "url": "https://maps.google.com/?cid=4850141657213508771&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 5, "hours": "오전 11:20 ~ 오후 11:30"}, {"id": "ChIJuapD_vOhfDURXVSiGv_AXhc", "a": "gn", "c": "sashimi", "name": "도툼횟집", "r": 4.3, "n": 143, "addr": "서울특별시 강남구 강남대로84길 15", "pr": [30000, 40000], "url": "https://maps.google.com/?cid=1683995512579183709&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 4, "hours": null}, {"id": "ChIJU5MfCFahfDURlb3A1WHO2uM", "a": "gn", "c": "sashimi", "name": "강남 보물섬", "r": 4, "n": 541, "addr": "서울특별시 강남구 테헤란로20길 11-1", "pr": [100000, null], "url": "https://maps.google.com/?cid=16418662311125892501&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA&hl=ko&gl=kr&source=apiv3", "walk": 11, "hours": "오후 4:00 ~ 오전 1:00"}];
+const CAT={hanwoo:["한우","var(--hanwoo)"],pork:["돼지","var(--pork)"],eel:["장어","var(--eel)"],sashimi:["회","var(--sashimi)"]};
+const AREA={yj:"양재역",gn:"강남역"};
+const DATES=[["12-21","12/21 (월)"],["12-22","12/22 (화)"],["12-23","12/23 (수)"],["12-24","12/24 (목)","성탄 전날"]];
+const TRANSIT=[
+ {k:"dt",n:"동탄",o:"동탄역",yj:[45,"GTX-A·SRT 수서 → 3호선 양재"],gn:[50,"GTX-A·SRT 수서 → 3호선 양재 → 신분당선 강남"]},
+ {k:"pg",n:"판교",o:"판교역",yj:[15,"신분당선 3정거장"],gn:[17,"신분당선 4정거장"]},
+ {k:"bc",n:"부천",o:"부천역",yj:[70,"1호선 신도림 → 2호선 교대 → 3호선 양재"],gn:[65,"1호선 신도림 → 2호선 강남"]}];
+const MAXP=100000;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const man=v=>(v/10000).toFixed(v%10000?1:0).replace(/\.0$/,"")+"만";
+const mid=r=>!r.pr?null:(r.pr[1]?(r.pr[0]+r.pr[1])/2:r.pr[0]);
+const dirT=(o,d)=>"https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(o)+"&destination="+encodeURIComponent(d)+"&travelmode=transit";
+
+/* ---------- 이동 표 ---------- */
+(function(){const tb=document.getElementById("tbody");let s={yj:0,gn:0};
+ tb.innerHTML=TRANSIT.map(t=>{s.yj+=t.yj[0];s.gn+=t.gn[0];const best=t.yj[0]<=t.gn[0]?"yj":"gn";
+  const cell=k=>`<td><div class="m ${k===best?"win":""}">약 ${t[k][0]}분</div><div class="r">${esc(t[k][1])}</div><a target="_blank" rel="noopener" href="${dirT(t.o,AREA[k])}">대중교통 길찾기</a></td>`;
+  return `<tr><td><b>${t.n}</b><div class="r">${t.o}</div></td>${cell("yj")}${cell("gn")}</tr>`}).join("");
+ document.getElementById("sum-yj").textContent="약 "+s.yj+"분";document.getElementById("sum-gn").textContent="약 "+s.gn+"분";})();
+
+/* ---------- 메뉴별 평균 ---------- */
+(function(){document.getElementById("avg").innerHTML=Object.entries(CAT).map(([c,[n,col]])=>{
+  const line=a=>{const xs=REST.filter(r=>r.a===a&&r.c===c).map(mid).filter(x=>x);return xs.length?man(Math.round(xs.reduce((p,q)=>p+q,0)/xs.length/1000)*1000)+"원":"–"};
+  return `<div><b style="color:${col}">${n}</b><span>양재 ${line("yj")} · 강남 ${line("gn")}</span><span>1인 평균 가운데 값</span></div>`}).join("");})();
+
+/* ---------- 투표 상태 ---------- */
+let db=null,user=null,me=null,votes={},names={},saving=false,pending=null,online=false;
+let mine={dates:[],area:null,foods:[],rests:[]};
+try{const s=JSON.parse(localStorage.getItem("ye-mine")||"null");if(s)mine=Object.assign(mine,s)}catch(e){}
+
+function tally(){const t={dates:{},area:{},foods:{},rests:{}};
+ const all=Object.assign({},votes);if(me||!online)all[me||"_me"]=mine;
+ for(const [id,v] of Object.entries(all)){if(!v)continue;
+  (v.dates||[]).forEach(x=>(t.dates[x]=t.dates[x]||[]).push(id));
+  if(v.area)(t.area[v.area]=t.area[v.area]||[]).push(id);
+  (v.foods||[]).forEach(x=>(t.foods[x]=t.foods[x]||[]).push(id));
+  (v.rests||[]).forEach(x=>(t.rests[x]=t.rests[x]||[]).push(id));}
+ return {t,n:Object.values(all).filter(v=>v&&((v.dates||[]).length||v.area||(v.foods||[]).length||(v.rests||[]).length)).length}}
+const nm=id=>id===me||id==="_me"?"나":(names[id]||"익명");
+const who=ids=>ids&&ids.length?ids.map(nm).join(", "):"";
+
+function chip(id,label,sub,on,ids,max){const n=ids?ids.length:0;
+ return `<button class="chip" data-v="${id}" aria-pressed="${on}"><span class="t">${label}${sub?` <small style="font-weight:400;opacity:.8">${sub}</small>`:""}</span><span class="c">${on?"✓ 선택":"&nbsp;"}</span></button>`}
+
+function renderVote(){const {t,n}=tally();const max=Math.max(1,n);
+ document.getElementById("q-date").innerHTML=DATES.map(([k,l,s])=>chip(k,l,s,mine.dates.includes(k),t.dates[k],max)).join("");
+ document.getElementById("q-area").innerHTML=Object.entries(AREA).map(([k,l])=>chip(k,l,"",mine.area===k,t.area[k],max)).join("");
+ document.getElementById("q-food").innerHTML=Object.entries(CAT).map(([k,[l]])=>chip(k,l,"",mine.foods.includes(k),t.foods[k],max)).join("");
+ const top=Object.entries(t.rests).sort((a,b)=>b[1].length-a[1].length).slice(0,5);
+ document.getElementById("lead").innerHTML=top.length?`<ol>${top.map(([id,ids])=>{const r=REST.find(x=>x.id===id);return r?`<li><b>${esc(r.name)}</b> · ${AREA[r.a]} ${CAT[r.c][0]}</li>`:""}).join("")}</ol>`:`<span class="vstat">아직 고른 식당이 없어요. 아래 카드에서 ♡를 눌러 주세요.</span>`;
+ if(online)document.getElementById("vstat").textContent=`${n}명 투표 · 6명 중`;
+ renderGrid(t);}
+
+function toggle(arr,v){const i=arr.indexOf(v);if(i>=0)arr.splice(i,1);else arr.push(v);}
+document.getElementById("q-date").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;toggle(mine.dates,b.dataset.v);changed()};
+document.getElementById("q-food").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;toggle(mine.foods,b.dataset.v);changed()};
+document.getElementById("q-area").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;mine.area=mine.area===b.dataset.v?null:b.dataset.v;changed()};
+
+function changed(){try{localStorage.setItem("ye-mine",JSON.stringify(mine))}catch(e){}
+ renderVote();if(online&&me){pending=Object.assign({},mine,{at:new Date().toISOString()});flush()}}
+async function flush(){if(saving||!pending)return;saving=true;const d=pending;pending=null;
+ try{await db.collection("votes").doc(me).set(d)}catch(e){document.getElementById("vstat").textContent="저장하지 못했어요. 잠시 뒤 다시 눌러 주세요. ("+(e&&e.code||"오류")+")"}
+ saving=false;if(pending)flush()}
+
+/* ---------- 식당 카드 ---------- */
+let fA="all",fF="all",fS="price";
+function seg(id,opts,get,set){const el=document.getElementById(id);
+ const draw=()=>el.innerHTML=opts.map(([k,l])=>`<button data-k="${k}" aria-pressed="${get()===k}">${l}</button>`).join("");
+ el.onclick=e=>{const b=e.target.closest("button");if(!b)return;set(b.dataset.k);draw();renderGrid(tally().t)};draw();}
+seg("f-area",[["all","전체"],["yj","양재"],["gn","강남"]],()=>fA,v=>fA=v);
+seg("f-food",[["all","전체"],...Object.entries(CAT).map(([k,[l]])=>[k,l])],()=>fF,v=>fF=v);
+seg("f-sort",[["price","싼 순"],["rating","평점순"],["walk","역에서 가까운 순"]],()=>fS,v=>fS=v);
+
+function renderGrid(t){t=t||{rests:{}};
+ let xs=REST.filter(r=>(fA==="all"||r.a===fA)&&(fF==="all"||r.c===fF));
+ const key={price:r=>mid(r)??1e9,rating:r=>-(r.r*1000+Math.min(r.n,999)/1000),walk:r=>r.walk}[fS];
+ xs.sort((a,b)=>key(a)-key(b));
+ const full=mine.rests.length>=3;
+ document.getElementById("grid").innerHTML=xs.map(r=>{const [cn,col]=CAT[r.c];const ids=t.rests[r.id]||[];const on=mine.rests.includes(r.id);
+  let bar,price;
+  if(r.pr){const a=r.pr[0],b=r.pr[1]||MAXP;const L=Math.min(a,MAXP)/MAXP*100,W=Math.max(3,(Math.min(b,MAXP)-Math.min(a,MAXP))/MAXP*100);
+   bar=`<div class="track" style="color:${col}"><i class="${r.pr[1]?"":"open"}" style="left:${L}%;width:${r.pr[1]?W:100-L}%;background-color:${r.pr[1]?col:"transparent"}"></i></div>`;
+   price=`<div class="pr"><span>1인 <b>${man(a)}~${r.pr[1]?man(r.pr[1]):""}원</b></span><span>6인 예상 약 <b>${man(Math.round(mid(r)*6/10000)*10000)}원${r.pr[1]?"":"~"}</b></span></div>`}
+  else{bar=`<div class="track"></div>`;price=`<div class="pr"><span>구글에 가격대 정보가 없어요</span></div>`}
+  return `<article class="rc"><div class="hd"><div class="nm"><span class="tag" style="background:${col}">${cn}</span>${esc(r.name)}</div>
+   <button class="heart" data-id="${r.id}" aria-pressed="${on}" ${!on&&full?"disabled":""} aria-label="${esc(r.name)} 투표">${on?"♥ 선택":"♡"}</button></div>
+   <div class="meta">${AREA[r.a]} 도보 약 ${r.walk}분 · <b>★ ${r.r}</b> (${r.n.toLocaleString()}명)${r.hours?" · 월–목 "+esc(r.hours):""}</div>
+   ${ids.length&&online?`<div class="who">♥ ${esc(who(ids))}</div>`:""}
+   <div class="range">${bar}<div class="scale"><span>0</span><span>5만</span><span>10만+</span></div></div>${price}
+   <div class="links"><a target="_blank" rel="noopener" href="${esc(r.url)}">구글 지도</a><a target="_blank" rel="noopener" href="${dirT(AREA[r.a],r.name+" "+r.addr)}">${AREA[r.a]}에서 길찾기</a></div></article>`}).join("");}
+document.getElementById("grid").onclick=e=>{const b=e.target.closest(".heart");if(!b||b.disabled)return;toggle(mine.rests,b.dataset.id);changed()};
+
+/* ---------- 복사 (저장 안 되는 화면) ---------- */
+document.getElementById("fbcopy").onclick=()=>{const L=v=>v;const nmv=document.getElementById("fbname").value.trim()||"이름";
+ const txt=`[송년회 투표] ${nmv}\n날짜: ${mine.dates.map(d=>DATES.find(x=>x[0]===d)[1]).join(", ")||"-"}\n장소: ${mine.area?AREA[mine.area]:"-"}\n메뉴: ${mine.foods.map(f=>CAT[f][0]).join(", ")||"-"}\n식당: ${mine.rests.map(id=>(REST.find(r=>r.id===id)||{}).name).filter(Boolean).join(", ")||"-"}`;
+ const done=m=>document.getElementById("fbdone").textContent=m;
+ navigator.clipboard.writeText(txt).then(()=>done("복사했어요. 단톡방에 붙여 넣으세요."),()=>{done("복사가 막혀 있어요. 아래 글을 길게 눌러 복사하세요.");const p=document.createElement("pre");p.style.whiteSpace="pre-wrap";p.textContent=txt;document.getElementById("fallback").appendChild(p)});};
+
+function offline(msg){online=false;document.getElementById("fbmsg").textContent=msg;document.getElementById("fallback").hidden=false;renderVote()}
+
+renderVote();
+offline("날짜·장소·메뉴·식당을 고른 뒤 아래 버튼으로 복사해서 단톡방에 붙여 주세요. 이 페이지에는 저장되지 않아요.");
+</script>
+
+</body></html>
